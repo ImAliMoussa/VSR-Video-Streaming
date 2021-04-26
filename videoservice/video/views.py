@@ -13,8 +13,9 @@ def get_videos(request):
     return JsonResponse(serializer.data, safe=False)
 
 def create_video(request):
-    v = Video(title="Big Buck Bunny", thumbnail_url="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg")
-
+    v = Video(title="Big Buck Bunny", url='https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4', thumbnail_url="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg")
+    v.save()
+    return JsonResponse('1', safe=False)
 
 def get_video(request, video_id: int):
     print(video_id)
