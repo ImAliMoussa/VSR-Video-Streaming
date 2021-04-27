@@ -1,1 +1,1 @@
-web: gunicorn videoservice.wsgi
+web: gunicorn --pythonpath videoservice videoservice.wsgi
