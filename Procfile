@@ -1,1 +1,1 @@
-web: gunicorn ./videoservice/videoservice.wsgi
+web: gunicorn videoservice/videoservice.wsgi
