@@ -1,1 +1,1 @@
-web: gunicorn ./videoservice/videoservice.wsgi --logfile -
+web: gunicorn ./videoservice/videoservice.wsgi
