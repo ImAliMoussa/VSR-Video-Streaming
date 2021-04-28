@@ -10,14 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
+import dj_database_url
 import django_heroku
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -29,7 +35,6 @@ SECRET_KEY = 'django-insecure-2lcl@uibon0w%v&78+!ycz*)-n_j7ep%+$aka!n7bum88r1_97
 DEBUG = True
 
 ALLOWED_HOSTS = ['v-sr.herokuapp.com', '127.0.0.1', 'localhost']
-
 
 # Application definition
 
@@ -75,23 +80,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'videoservice.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+database_conf = {
+    'user': env('DATABASE_NAME')
+}
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'VSR',
-        'USER': 'postgres',
-        'PASSWORD' : '1234',
-        'HOST' : 'localhost',
-        'PORT': '5432'
-
+        'NAME': env('DATABASE_NAME'), #'VSR',
+        'USER': env('DATABASE_USER'), #'postgres',
+        'PASSWORD': env('DATABASE_PASSWORD'), #'1234',
+        'HOST': env('DATABASE_HOST'), #localhost
+        'PORT': env('DATABASE_PORT')
     }
 }
 
-import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
@@ -113,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -126,7 +131,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

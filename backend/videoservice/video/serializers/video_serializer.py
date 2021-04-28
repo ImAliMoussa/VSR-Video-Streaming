@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from video.models import Video
 
 
 # if you use serializers.Serializer u need to
@@ -23,11 +22,12 @@ from video.models import Video
 #         instance.save()
 
 #         return instance
+from videoservice.video.models import Video
+
+import sys
+print('curr sys path', sys.path)
 
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = ['id', 'url', 'title', 'thumbnail_url', 'upload_date']
-
-
-### initializer and preload models with server initialization

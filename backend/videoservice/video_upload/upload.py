@@ -1,8 +1,9 @@
 import os
+
 import boto3
 from dotenv import load_dotenv
-load_dotenv()
 
+load_dotenv()
 
 session = boto3.session.Session()
 bucket_name = 'video-super-resolution'

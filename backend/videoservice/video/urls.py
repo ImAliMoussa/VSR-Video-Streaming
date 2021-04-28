@@ -1,5 +1,6 @@
 from django.urls import path
-from django.views.decorators.http import require_GET, require_POST, require_safe
+from django.views.decorators.http import require_safe
+
 from .views import *
 
 urlpatterns = [

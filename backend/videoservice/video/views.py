@@ -1,10 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 
 from .models import Video
-from video.serializers.video_serializer import VideoSerializer
-# Create your views here.
 
+
+# Create your views here.
+from .serializers.video_serializer import VideoSerializer
 
 
 def get_videos(request):
@@ -12,10 +12,17 @@ def get_videos(request):
     serializer = VideoSerializer(videos, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+
 def create_video(request):
-    v = Video(title="Big Buck Bunny", url='https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4', thumbnail_url="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg")
+    v = Video(
+        title='This is a title',
+        video_key_s3='BigBuckBunny.mp4',
+        thumbnail_key_s3='thumbnail.jpeg',
+        audio_key_s3='output_audio.aac',
+    )
     v.save()
     return JsonResponse('1', safe=False)
+
 
 def get_video(request, video_id: int):
     print(video_id)
