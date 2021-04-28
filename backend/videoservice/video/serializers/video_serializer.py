@@ -22,9 +22,10 @@ from rest_framework import serializers
 #         instance.save()
 
 #         return instance
-from videoservice.video.models import Video
-
 import sys
+
+from video.models import Video
+
 print('curr sys path', sys.path)
 
 class VideoSerializer(serializers.ModelSerializer):
