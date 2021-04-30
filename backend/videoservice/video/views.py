@@ -1,8 +1,6 @@
 from django.http import JsonResponse
 
 from .models import Video
-
-
 # Create your views here.
 from .serializers.video_serializer import VideoSerializer
 

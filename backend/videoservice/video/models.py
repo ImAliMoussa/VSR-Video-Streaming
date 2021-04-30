@@ -14,7 +14,3 @@ class Video(models.Model):
 
     def __str__(self):
         return json.dumps(self.__dict__)
-
-# https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4
-
-# thumbnaul
