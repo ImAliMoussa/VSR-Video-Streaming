@@ -1,16 +1,23 @@
-import React from 'react';
-import './App.css';
+import * as React from 'react';
+import VideoPlayer from './VideoPlayer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+const videoJsOptions = {
+  autoplay: true,
+  controls: true,
+  sources: [{
+    src: 'http://vjs.zencdn.net/v/oceans.mp4',
+    type: 'video/mp4',
+  }],
+};
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <VideoPlayer {...videoJsOptions} />
+      </div>
+    );
+  }
 }
 
 export default App;

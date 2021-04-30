@@ -20,11 +20,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "require-jsdoc" : 0
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
+        "require-jsdoc": 0,
+        "max-len": "off"    
     }
 }
