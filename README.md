@@ -37,3 +37,8 @@ then
 }
 ```
 For formatting and linting, 3shan el code yefdal nedif
+
+3) For formatting the entire directory 3shan el spacing wel nadafa:
+```
+black .
+```
