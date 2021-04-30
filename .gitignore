@@ -155,3 +155,5 @@ npm-debug.log
 
 .vscode
 .idea
+*.m4s
+*.mpd

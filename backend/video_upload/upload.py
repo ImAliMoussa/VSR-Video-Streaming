@@ -9,6 +9,7 @@ environ.Env.read_env()
 
 session = boto3.session.Session()
 bucket_name = "video-super-resolution"
+
 s3_client = session.client(
     "s3",
     region_name="fra1",
