@@ -5,14 +5,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('video', '0002_alter_video_upload_date'),
+        ("video", "0002_alter_video_upload_date"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='video',
-            name='audio_url',
-            field=models.URLField(default='www.examples.com/audio.aac'),
+            model_name="video",
+            name="audio_url",
+            field=models.URLField(default="www.examples.com/audio.aac"),
             preserve_default=False,
         ),
     ]

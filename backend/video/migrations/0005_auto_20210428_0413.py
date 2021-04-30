@@ -5,18 +5,14 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('video', '0004_auto_20210428_0220'),
+        ("video", "0004_auto_20210428_0220"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='video',
-            old_name='audio_url',
-            new_name='audio_key_s3',
+            model_name="video", old_name="audio_url", new_name="audio_key_s3",
         ),
         migrations.RenameField(
-            model_name='video',
-            old_name='thumbnail_url',
-            new_name='thumbnail_key_s3',
+            model_name="video", old_name="thumbnail_url", new_name="thumbnail_key_s3",
         ),
     ]

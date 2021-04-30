@@ -3,7 +3,6 @@ from datetime import datetime
 
 from django.db import models
 
-
 # Create your models here.
 class Video(models.Model):
     title = models.CharField(max_length=1000)
@@ -14,5 +13,3 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
-    
-

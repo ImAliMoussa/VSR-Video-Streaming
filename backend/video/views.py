@@ -1,6 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 
 from .models import Video
+
 # Create your views here.
 from .serializers.video_serializer import VideoSerializer
 
@@ -13,13 +14,13 @@ def get_videos(request):
 
 def create_video(request):
     v = Video(
-        title='This is a title',
-        video_key_s3='BigBuckBunny.mp4',
-        thumbnail_key_s3='thumbnail.jpeg',
-        audio_key_s3='output_audio.aac',
+        title="This is a title",
+        video_key_s3="BigBuckBunny.mp4",
+        thumbnail_key_s3="thumbnail.jpeg",
+        audio_key_s3="output_audio.aac",
     )
     v.save()
-    return JsonResponse('1', safe=False)
+    return JsonResponse("1", safe=False)
 
 
 def get_video(request, video_id: int):
