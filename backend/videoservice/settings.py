@@ -78,14 +78,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'videoservice.wsgi.application'
+envWSGI_APPLICATION = 'videoservice.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-database_conf = {
-    'user': env('DATABASE_NAME')
-}
 
 DATABASES = {
     'default': {
