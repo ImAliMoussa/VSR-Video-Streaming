@@ -13,4 +13,6 @@ class Video(models.Model):
     audio_key_s3 = models.CharField(max_length=128)
 
     def __str__(self):
-        return json.dumps(self.__dict__)
+        return self.title
+    
+
