@@ -50,7 +50,7 @@ For formatting and linting, 3shan el code yefdal nedif
 ```
 black .
 ```
-
+---
 
 # Debugging Django in vscode
 
