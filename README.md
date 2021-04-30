@@ -1,5 +1,7 @@
 Notes from Ali:
 
+# Environemnt variables
+
 1) Create a .env file similar to this
 
 ```
@@ -14,6 +16,9 @@ SPACES_SECRET=foo
 ```
 
 place this at backend/videoservice/.env
+
+---
+# VScode lina kolena
 
 2) Create a .vscode folder and add the following
 do this first:
@@ -38,6 +43,9 @@ then
 ```
 For formatting and linting, 3shan el code yefdal nedif
 
+---
+
+# Nadafa sahla
 3) For formatting the entire directory 3shan el spacing wel nadafa:
 ```
 black .
