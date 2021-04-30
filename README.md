@@ -38,7 +38,10 @@ then
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
     "editor.formatOnSave": true,
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
 }
 ```
 For formatting and linting, 3shan el code yefdal nedif
