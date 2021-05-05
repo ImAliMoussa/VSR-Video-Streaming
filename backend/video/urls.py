@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.decorators.http import require_safe
 
-from .views import *
+from .views import create_video, get_video, get_videos
 
 urlpatterns = [
     path("video/create", require_safe(create_video)),
