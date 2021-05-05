@@ -10,9 +10,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="video", old_name="audio_url", new_name="audio_key_s3",
+            model_name="video",
+            old_name="audio_url",
+            new_name="audio_key_s3",
         ),
         migrations.RenameField(
-            model_name="video", old_name="thumbnail_url", new_name="thumbnail_key_s3",
+            model_name="video",
+            old_name="thumbnail_url",
+            new_name="thumbnail_key_s3",
         ),
     ]

@@ -9,7 +9,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="video", name="url",),
+        migrations.RemoveField(
+            model_name="video",
+            name="url",
+        ),
         migrations.AddField(
             model_name="video",
             name="video_key_s3",
