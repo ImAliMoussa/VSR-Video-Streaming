@@ -157,3 +157,5 @@ npm-debug.log
 .idea
 *.m4s
 *.mpd
+
+media/
