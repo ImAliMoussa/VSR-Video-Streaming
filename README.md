@@ -24,7 +24,7 @@ place this at backend/videoservice/.env
 do this first:
 
 ```
-pip3 install black flake8
+pip3 install black pylint pylint-django
 ```
 
 then
@@ -32,16 +32,24 @@ then
 ```
 // .vscode/settings.json
 {
-    "python.pythonPath": "/home/ali/anaconda3/envs/deeplearning/bin/python",
-    "python.terminal.activateEnvironment": true,
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.pylintEnabled": false,
+    "python.pythonPath": "./venv/bin/python",
     "editor.formatOnSave": true,
-    "python.formatting.provider": "black",
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
-    }
+    },
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintPath": "pylint",
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.lintOnSave": true,
+    "python.linting.pylintArgs": [
+        "--disable=C0111", // missing docstring
+        "--django-settings-module=videoservice.settings",
+        "--load-plugins",
+        "pylint_django",
+    ],
+    "python.formatting.provider": "black",
 }
 ```
 For formatting and linting, 3shan el code yefdal nedif
