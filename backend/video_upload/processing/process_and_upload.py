@@ -21,5 +21,6 @@ def process_and_upload_video(serializer: UploadVideoSerializer):
         video_key_s3=video_file,
         thumbnail_key_s3=thumbnail_file,
         audio_key_s3=audio_file,
+        upload_date=upload_date
     )
     video.save()
