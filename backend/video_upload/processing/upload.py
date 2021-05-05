@@ -5,7 +5,6 @@ import environ
 from botocore.exceptions import ClientError
 
 env = environ.Env()
-environ.Env.read_env()
 
 session = boto3.session.Session()
 bucket_name = "video-super-resolution"
@@ -21,7 +20,7 @@ s3_client = session.client(
 
 def list_s3_bucket():
     response = s3_client.list_objects(Bucket=bucket_name)
-    return [obj["Key"] for obj in response["Content"]]
+    return [obj["Key"] for obj in response["Contents"]]
 
 
 def upload_file(filename: str):

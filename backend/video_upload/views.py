@@ -1,9 +1,14 @@
+from concurrent.futures import ThreadPoolExecutor
+
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from .serializers import UploadVideoSerializer
+
+
+max_worker_threads = 2
+executor = ThreadPoolExecutor(max_workers=max_worker_threads)
 
 
 class NewVideoUploadView(APIView):
