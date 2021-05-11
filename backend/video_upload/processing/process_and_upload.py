@@ -2,9 +2,9 @@ import os.path
 
 from django.conf import settings
 
+from video.models import Video
 from .audiocreation import create_audio_file_from_video
 from .upload import upload_file
-from ..models import Video
 from ..serializers import UploadVideoSerializer
 
 
