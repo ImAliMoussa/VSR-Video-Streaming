@@ -2,21 +2,22 @@ import React from 'react';
 
 
 // from backend models.py
-type Video = {
-    videoKeyS3: string,
-    title: string,
-    uploadDate: string,
-    thumbnailKeyS3: string,
-    audioKeyS3: string,
-}
+// type Video = {
+//     videoKeyS3: string,
+//     title: string,
+//     uploadDate: string,
+//     thumbnailKeyS3: string,
+//     audioKeyS3: string,
+// }
 
-type VideoListProps = {
-    videoList: Array<Video>,
-}
+// type VideoListProps = {
+//     videoList: Array<any>,
+// }
 
-const VideoList = (props: VideoListProps) => {
+const VideoList = (props: any) => {
+  const res = props.videoList.map((el: any) => console.log(el));
+  console.log(res);
   return <div>
-    {JSON.stringify(props.videoList)}
   </div>;
 };
 
