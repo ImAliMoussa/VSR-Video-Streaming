@@ -11,7 +11,6 @@ def process_and_upload_video(serializer: UploadVideoSerializer):
     upload_date = serializer.data['upload_date']
 
     audio_file = create_audio_file_from_video(video_file)
-
     upload_file(video_file)
     upload_file(thumbnail_file)
     upload_file(audio_file)
