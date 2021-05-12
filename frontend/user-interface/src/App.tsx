@@ -1,31 +1,36 @@
-import React, {useState, MouseEvent} from 'react';
-import VideoPlayer from './VideoPlayer';
+import React, {MouseEvent, useState} from 'react';
+import VideoPage from './VideoPage';
+import axios from 'axios';
+import VideoList from './VideoList';
 
-type AppProps = {
-  videoLink: string,
-}
 
-const App = (props: AppProps) => {
-  const [videoLink, setVideoLink] = useState(props.videoLink);
-  const videoJsOptions = {
-    autoplay: true,
-    controls: true,
-    sources: [{
-      // src: 'http://vjs.zencdn.net/v/oceans.mp4',
-      src: videoLink,
-      type: 'video/mp4',
-    }],
-  };
+// video_key_s3 = models.CharField(max_length = 128)
+// title = models.CharField(max_length = 1000)
+// upload_date = models.DateTimeField(default=datetime.now)
+// thumbnail_key_s3 = models.CharField(max_length = 128)
+// audio_key_s3 = models.CharField(max_length = 128)
+
+const App = () => {
+  const [videoList, setVideoList] = useState([]);
+
 
   const handleBtnPress = (event: MouseEvent) => {
     event.preventDefault();
-    setVideoLink('http://vjs.zencdn.net/v/oceans.mp4');
   };
+
+  axios.get('http://localhost:8000/api/video')
+      .then((res) => {
+        const newVideoList = res.data;
+        setVideoList(newVideoList);
+      })
+      .catch((err) => console.error(err));
+
 
   return (
     <div className="App">
-      <VideoPlayer {...videoJsOptions} />
-      <button onClick={handleBtnPress}>Click here for nothing</button>
+      <VideoPage videoLink='http://vjs.zencdn.net/v/oceans.mp4' />
+      <button onClick={handleBtnPress}>Button</button>
+      <VideoList videoList={videoList} />
     </div>
   );
 };

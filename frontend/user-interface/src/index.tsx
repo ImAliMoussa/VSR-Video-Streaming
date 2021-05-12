@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
 ReactDOM.render(
     <React.StrictMode>
-      <App videoLink={'http://vjs.zencdn.net/v/oceans.mp4'} />
+      <App />
     </React.StrictMode>,
     document.getElementById('root'),
 );
