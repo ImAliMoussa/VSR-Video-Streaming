@@ -87,3 +87,13 @@ black .
     ]
 }
 ```
+
+
+---
+
+# Install libmagic
+
+
+```
+pip install python-magic-bin
+```
