@@ -1,11 +1,9 @@
 import time
-
 import cv2
 import numpy as np
 import onnxruntime
 
 # TODO close session after resolving
-
 
 scale = 4
 ort_session = onnxruntime.InferenceSession("./super_resolution.onnx")
@@ -84,3 +82,5 @@ def super_resolve(image):
     end_time = time.time()
     print(end_time - start_time)
     return output
+
+
