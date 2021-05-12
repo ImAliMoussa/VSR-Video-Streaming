@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <App videoLink={'http://vjs.zencdn.net/v/oceans.mp4'} />
     </React.StrictMode>,
     document.getElementById('root'),
 );

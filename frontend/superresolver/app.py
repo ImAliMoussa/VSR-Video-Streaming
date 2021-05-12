@@ -23,19 +23,19 @@ app = Flask(__name__)
 #         response.headers.add(
 #             "Access-Control-Allow-Methods", "GET, HEAD, OPTIONS"
 #         )
-        
+
 #         response.headers.add("Access-Control-Allow-Credentials", "true")
 
 #         return response
 
 
 def stream_video(video_url, audio_url, output="dash/output.mpd"):
-    perform_super_resolution = True
+    perform_super_resolution = False
 
     stream = CamGear(
         source=video_url,
         logging=True,
-    ).start()   
+    ).start()
 
     # activate Single-Source Mode and various streams, along with custom audio
     stream_params = {
@@ -71,7 +71,7 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
 def get_superresolved():
     video_url = request.args.get('video', None)
     audio_url = request.args.get('audio', None)
-    if video_url is None or audio_url is None:  
+    if video_url is None or audio_url is None:
         abort(400)
 
     err = False
@@ -83,24 +83,24 @@ def get_superresolved():
     if err:
         abort(500)
 
-    
     return jsonify(
-                {"success": True}
-            )
-    
+        {"success": True}
+    )
+
 
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
-                    "success": False, 
-                    "error": 400,
-                    "message": "Bad Request."
-                    }), 400
+        "success": False,
+        "error": 400,
+        "message": "Bad Request."
+    }), 400
+
 
 @app.errorhandler(500)
 def internal_server_error(error):
     return jsonify({
-                    "success": False, 
-                    "error": 500,
-                    "message": "Internal Server Error."
-                    }), 500
+        "success": False,
+        "error": 500,
+        "message": "Internal Server Error."
+    }), 500
