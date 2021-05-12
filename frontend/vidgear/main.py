@@ -7,7 +7,6 @@ perform_super_resolution = True
 
 stream = CamGear(
     source="https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4",
-    logging=True,
 ).start()
 
 # activate Single-Source Mode and various streams, along with custom audio
