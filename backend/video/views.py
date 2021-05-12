@@ -1,7 +1,9 @@
 from django.http import JsonResponse
+from rest_framework import status
 
 from .models import Video
 # Create your views here.
+from .presigned_link import get_file_link
 from .serializers.video_serializer import VideoSerializer
 
 
@@ -23,9 +25,17 @@ def create_video(request):
 
 
 def get_video(request, video_id: int):
-    print(video_id)
-    video = Video.objects.get(pk=video_id)
-
-    serializer = VideoSerializer(video)
-
-    return JsonResponse(serializer.data)
+    try:
+        video = Video.objects.get(pk=video_id)
+        video_link = get_file_link(video.video_key_s3)
+        audio_link = get_file_link(video.audio_key_s3)
+        thumbnail_link = get_file_link(video.thumbnail_key_s3)
+        response_json = {
+            'video_link': video_link,
+            'audio_link': audio_link,
+            'thumbnail_link': thumbnail_link
+        }
+        return JsonResponse(response_json, status=status.HTTP_200_OK)
+    except Video.DoesNotExist as e:
+        print(e)
+        return JsonResponse(status=status.HTTP_404_NOT_FOUND)
