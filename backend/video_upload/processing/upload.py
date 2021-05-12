@@ -1,13 +1,20 @@
 import logging
+import ntpath
+import os.path
+import traceback
 
 import boto3
 import environ
+import magic
 from botocore.exceptions import ClientError
+from django.conf import settings
 
 env = environ.Env()
 
 session = boto3.session.Session()
 bucket_name = "video-super-resolution"
+
+mime = magic.Magic(mime=True)
 
 s3_client = session.client(
     "s3",
@@ -23,14 +30,15 @@ def list_s3_bucket():
     return [obj["Key"] for obj in response["Contents"]]
 
 
-def upload_file(filename: str):
+def upload_file(file_relative_path: str):
     try:
         # generate a key
-        object_name = filename
-        extra_args = {"ContentType": "video/mp4"}
-        s3_client.upload_file(filename, bucket_name, object_name, ExtraArgs=extra_args)
+        s3_object_key = ntpath.basename(file_relative_path)
+        file_full_path = os.path.join(settings.MEDIA_ROOT, s3_object_key)
+        extra_args = {"ContentType": mime.from_file(file_full_path)}
+        s3_client.upload_file(file_full_path, bucket_name, s3_object_key, ExtraArgs=extra_args)
     except ClientError as e:
-        logging.error(e)
+        traceback.print_exc()
 
 
 def get_video_link(video_key: str):
