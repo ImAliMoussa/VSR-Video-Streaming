@@ -1,7 +1,7 @@
 import React, {MouseEvent, useState} from 'react';
 import VideoPage from './VideoPage';
 import axios from 'axios';
-import VideoList from './VideoList';
+import VideoSideBar from './VideoSideBar';
 
 const App = () => {
   const [videoList, setVideoList] = useState([]);
@@ -24,8 +24,8 @@ const App = () => {
   return (
     <div className="App">
       <VideoPage videoLink='http://vjs.zencdn.net/v/oceans.mp4' />
-      <button onClick={handleBtnPress}>Button</button>
-      <VideoList videoList={videoList} />
+      <button onClick={handleBtnPress}>Get Videos From Django</button>
+      <VideoSideBar videoList={videoList} />
     </div>
   );
 };

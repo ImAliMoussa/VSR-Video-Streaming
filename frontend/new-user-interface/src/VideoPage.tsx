@@ -2,7 +2,7 @@ import React, {useState, MouseEvent} from 'react';
 import VideoPlayer from './VideoPlayer';
 
 type VideoPageProps = {
-  videoLink: string,
+    videoLink: string,
 }
 
 const VideoPage = (props: VideoPageProps) => {
