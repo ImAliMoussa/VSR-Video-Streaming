@@ -10,7 +10,7 @@ def name_generator(instance, filename):
 
 
 class UploadVideoModel(models.Model):
-    video_file = models.FileField(blank=False, null=False, upload_to=name_generator)
-    thumbnail_file = models.ImageField(null=False, upload_to=name_generator)
+    videoFile = models.FileField(blank=False, null=False, upload_to=name_generator)
+    thumbnailFile = models.ImageField(null=False, upload_to=name_generator)
     title = models.CharField(max_length=64)
-    upload_date = models.DateTimeField(auto_now_add=True)
+    uploadDate = models.DateTimeField(auto_now_add=True)

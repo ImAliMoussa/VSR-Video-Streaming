@@ -7,4 +7,4 @@ from .models import UploadVideoModel
 class UploadVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = UploadVideoModel
-        fields = ('video_file', 'thumbnail_file', 'title', 'upload_date')
+        fields = ('videoFile', 'thumbnailFile', 'title', 'uploadDate')
