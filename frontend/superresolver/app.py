@@ -83,10 +83,11 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
     streamer.terminate()
 
 
-@app.route('/superresolve', methods=['GET'])
-def get_superresolved():
-    video_url = request.args.get('video', None)
-    audio_url = request.args.get('audio', None)
+@app.route('/superresolve', methods=['post'])
+def post_superresolved():
+    body = request.get_json()
+    video_url = body.get('videoURL', None)
+    audio_url = body.get('audioURL', None)
     if video_url is None or audio_url is None:  
         abort(400)
 
