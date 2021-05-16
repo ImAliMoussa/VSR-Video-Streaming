@@ -16,5 +16,13 @@ class Video(models.Model):
     def thumbnailURL(self):
         return get_file_link(self.thumbnailKeyS3)
 
+    @property
+    def videoURL(self):
+        return get_file_link(self.videoKeyS3)
+    
+    @property
+    def audioURL(self):
+        return get_file_link(self.audioKeyS3)
+
     def __str__(self):
         return self.title

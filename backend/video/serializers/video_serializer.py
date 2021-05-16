@@ -8,9 +8,9 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
         fields = [
             "id",
-            "videoKeyS3",
+            "videoURL",
             "title",
             "uploadDate",
             "thumbnailURL",
-            "audioKeyS3",
+            "audioURL",
         ]
