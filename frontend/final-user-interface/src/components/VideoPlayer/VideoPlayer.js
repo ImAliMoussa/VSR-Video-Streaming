@@ -29,7 +29,7 @@ const VideoPlayer = () => {
         setVideoInfo([]);
         setIsLoading(true);
         axios
-          .get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2C%20statistics&id=${videoId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`)
+          .get(`https://localhost:8000/api/video/${videoId}`)
           .then(response => {
               createVideoInfo(response.data['items'][0]);
               setIsError(false);
