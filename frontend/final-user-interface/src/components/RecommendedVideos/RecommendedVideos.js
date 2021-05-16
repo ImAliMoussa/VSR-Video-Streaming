@@ -37,26 +37,20 @@ const RecommendedVideos = () => {
       let newVideoCards = [];
       for (const video of videoItems) {
         const videoId = video.id;
-        const snippet = video.snippet;
-        const channelId = snippet.channelId;
-        const response = await axios
-                              .get(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`)
-        const channelImage = response.data.items[0].snippet.thumbnails.medium.url;
 
-        const title = snippet.title;
-        const image = snippet.thumbnails.medium.url;
-        const views = video.statistics.viewCount;
-        const timestamp = DateTime.fromISO(snippet.publishedAt).toRelative();
-        const channel = snippet.channelTitle;
+        const title = video.title;
+        const image = video.thumbnailURL;
+        //const views = video.statistics.viewCount;
+        const timestamp = DateTime.fromISO(video.uploadDate).toRelative();
 
         newVideoCards.push({
           videoId,
           image,
           title,
-          channel,
-          views,
+      //    channel,
+      //    views,
           timestamp,
-          channelImage
+      //    channelImage
         });
       };
       setVideoCards(newVideoCards);
@@ -78,10 +72,10 @@ const RecommendedVideos = () => {
                               <VideoCard 
                                 title={item.title}
                                 image={item.image}
-                                views={item.views}
+                               // views={item.views}
                                 timestamp={item.timestamp}
-                                channel={item.channel}
-                                channelImage={item.channelImage}
+                               // channel={item.channel}
+                               // channelImage={item.channelImage}
                               />
                             </Link>
                     )
