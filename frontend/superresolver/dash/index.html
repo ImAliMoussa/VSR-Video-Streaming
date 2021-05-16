@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        video {
+            width: 640px;
+            height: 360px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dashjs/3.2.2/dash.all.min.js" integrity="sha512-vYbnErl9JO63c2v/ADkEKrYfQChzm4v7nU+55A5EvO7P+AYm9bmdtZhBA6Fg8FkfqEvXJLd/k9L26d1HS1eOtg==" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div>
+        <video id="videoPlayer" controls></video>
+        <video id="videoPlayer_sr" controls></video>
+    </div>
+    <script>
+        function play_vid(){
+            var url_sr = "http://localhost:63636/output.mpd";
+            var player = dashjs.MediaPlayer().create();
+            player.initialize(document.querySelector("#videoPlayer_sr"), url_sr, true);
+
+        }
+    </script>
+    <button onclick="play_vid()">Play</button> 
+</body>
+</html>

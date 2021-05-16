@@ -80,7 +80,7 @@ def super_resolve(image):
     output = np.clip(convert_ycbcr_to_rgb(output), 0.0, 255.0).astype(np.uint8)
     # output = cv2.resize(output, None, fx=0.5, fy=0.5)
     end_time = time.time()
-    print(end_time - start_time)
+    # print(end_time - start_time)
     return output
 
 

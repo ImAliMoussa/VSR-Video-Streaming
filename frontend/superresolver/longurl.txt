@@ -1,0 +1,3 @@
+http://localhost:5000/superresolve?video=https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4&audio=https://video-super-resolution.fra1.digitaloceanspaces.com/output_audio.aac
+
+C:\Koleya\Term 10\Graduation Project 2\vsr\frontend\superresolver\dash
