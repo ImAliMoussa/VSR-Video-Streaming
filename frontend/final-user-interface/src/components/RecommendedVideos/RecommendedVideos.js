@@ -15,12 +15,18 @@ const RecommendedVideos = () => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-      axios
+      axios.get('http://localhost:8000/api/video')
+      .then((res) => {
+        console.log(res);
+        const newVideoList = res.data;
+        createVideoCards(newVideoList);
+      })
+   /*   axios
       .get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=${40}&regionCode=PK&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`)
       .then(response => {
           console.log(response.data.items);
           createVideoCards(response.data.items);
-        })
+        }) */
         .catch(error => {
           console.log(error);
           setIsError(true);
