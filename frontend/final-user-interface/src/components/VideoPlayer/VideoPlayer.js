@@ -16,7 +16,7 @@ const VideoPlayer = () => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-
+/*
         axios
             .get(`http://localhost:5000/superresolve?video=https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4&audio=https://video-super-resolution.fra1.digitaloceanspaces.com/output_audio.aac`)
             .then( response => {
@@ -25,14 +25,17 @@ const VideoPlayer = () => {
             .catch(error => {
                 console.log(error);
                 setIsError(true);
-            })
+            }) */
         setVideoInfo([]);
         setIsLoading(true);
+
         axios
-          .get(`https://localhost:8000/api/video/${videoId}`)
+          .get(`http://localhost:8000/api/video/${videoId}`)
           .then(response => {
-              createVideoInfo(response.data['items'][0]);
+              console.log(response);
               setIsError(false);
+              createVideoInfo(response.data);
+
           })
           .catch(error => {
               console.log(error);
@@ -41,36 +44,36 @@ const VideoPlayer = () => {
     }, [videoId])
 
     async function createVideoInfo (video) {
-        const snippet = video.snippet;
-        const stats = video.statistics;
-        const channelId = snippet.channelId;
-        const response = await axios
-                              .get(`https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=${channelId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`)
+        console.log("+++++++++++++++");
+        console.log(`http://localhost:5000/superresolve?video=${video.videoURL}&audio=${video.audioURL}`);
+        axios
         
-        const channelImage = response.data.items[0].snippet.thumbnails.medium.url;
-        const subs = response.data.items[0].statistics.subscriberCount;
-        const publishedDate = new Date(snippet.publishedAt).toLocaleDateString('en-GB', {  
+        .get(`http://localhost:5000/superresolve?video=${video.videoURL}&audio=${video.audioURL}`)
+        .then( response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+            setIsError(true);
+        })
+
+        const thumbnailURL = video.thumbnailURL;
+        const videoURL = video.videoURL;
+        const audioURL = video.audioURL;
+        const publishedDate = new Date(video.uploadDate).toLocaleDateString('en-GB', {  
                                                                 day : 'numeric',
                                                                 month : 'short',
                                                                 year : 'numeric'
                                                             });
-        const title = snippet.title;
-        const description = snippet.description;
-        const channelTitle = snippet.channelTitle;
-        const viewCount = stats.viewCount;
-        const likeCount = stats.likeCount;
-        const dislikeCount = stats.dislikeCount;
+        const title = video.title;
+       // const description = snippet.description;
 
         setVideoInfo({
             title,
-            description,
+            thumbnailURL,
+            videoURL,
+            audioURL,
             publishedDate,
-            channelTitle,
-            channelImage,
-            viewCount,
-            likeCount,
-            dislikeCount,
-            subs
         });
         setIsLoading(false);
     }
@@ -81,19 +84,12 @@ const VideoPlayer = () => {
         <div className='videoplayer'>
             <div className='videoplayer__videodetails'>
                 <div className='videoplayer__video'>
-                    {isLoading ? <CircularProgress className='loading' color='secondary'/> : <Video videoId={videoId} /> }
+                    {isLoading ? <CircularProgress className='loading' color='secondary'/> : <Video videoURL={videoInfo.videoURL} audioURL={videoInfo.audioURL} /> }
                 </div>
                 <div className='videoplayer__videoinfo'>
                     {!isLoading ? <VideoInfo
-                                    title={videoInfo.snippet}
-                                    description={videoInfo.description}
+                                    title={videoInfo.title}
                                     publishedDate={videoInfo.publishedDate}
-                                    channelTitle={videoInfo.channelTitle}
-                                    channelImage={videoInfo.channelImage}
-                                    viewCount={videoInfo.viewCount}
-                                    likeCount={videoInfo.likeCount}
-                                    dislikeCount={videoInfo.dislikeCount}
-                                    subs={videoInfo.subs}
                                   /> : null
                     }
                 </div>

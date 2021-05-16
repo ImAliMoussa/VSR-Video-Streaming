@@ -1,6 +1,7 @@
 .videoplayer {
     display: flex;
     justify-content: center;
+    margin: 5% 5% 5% 10%;
 }
 
 .videoplayer__videodetails {

@@ -1,12 +1,13 @@
 import React from 'react';
 import YouTube from 'react-youtube';
 
-const Video = ({videoID}) => {
+const Video = ({videoURL , audioURL}) => {
     return (
         <div>
-          <YouTube
-            videoId={videoID}
-          />
+  <video controls>
+  <source src={videoURL} type="video/mp4" />
+  Your browser does not support the video tag.
+    </video>
         </div>
     )
 }
