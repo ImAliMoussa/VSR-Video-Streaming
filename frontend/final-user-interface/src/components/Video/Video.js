@@ -1,15 +1,23 @@
-import React from 'react';
-import YouTube from 'react-youtube';
+import React, {useState, MouseEvent} from 'react';
+import VideoPlay from './VideoPlay';
 
-const Video = ({videoURL , audioURL}) => {
-    return (
-        <div>
-  <video controls>
-  <source src={videoURL} type="video/mp4" />
-  Your browser does not support the video tag.
-    </video>
-        </div>
-    )
-}
+
+const Video = ({}) => {
+  const [videoLink, setVideoLink] = useState("http://localhost:63636/output.mpd");
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    sources: [{
+      src: videoLink,
+      type: 'application/dash+xml',
+    }],
+  };
+
+  return (
+    <div className="App">
+      <VideoPlay {...videoJsOptions} />
+    </div>
+  );
+};
 
 export default Video;

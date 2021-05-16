@@ -1,7 +1,8 @@
 .videoplayer {
     display: flex;
+    width: 100%;
     justify-content: center;
-    margin: 5% 5% 5% 10%;
+    margin: 5% 5% 5% 0%;
 }
 
 .videoplayer__videodetails {
@@ -14,7 +15,7 @@
 }
 
 .videoplayer__suggested {
-    flex: 0.2;
+    flex: 0.1;
     margin-top: 0 !important;
 }
 

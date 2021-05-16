@@ -42,7 +42,7 @@ CORS(app, resources={r"*": {"origins": "*"}}, allow_headers="*")
 
 def stream_video(video_url, audio_url, output="dash/output.mpd"):
     print('Starting')
-    perform_super_resolution = False
+    perform_super_resolution = True
 
     stream = CamGear(
         source=video_url,
@@ -88,7 +88,7 @@ def post_superresolved():
     body = request.get_json()
     video_url = body.get('videoURL', None)
     audio_url = body.get('audioURL', None)
-    if video_url is None or audio_url is None:  
+    if video_url is None or audio_url is None:
         abort(400)
 
     err = False

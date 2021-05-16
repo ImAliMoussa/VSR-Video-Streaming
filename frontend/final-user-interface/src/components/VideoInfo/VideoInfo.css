@@ -12,6 +12,7 @@
 .videoinfo__stats > p {
     font-size: medium;
     color: gray;
+    margin-left: 10px;
 }
 
 .videoinfo__stats > * {

@@ -32,7 +32,6 @@ const VideoPlayer = () => {
         axios
           .get(`http://localhost:8000/api/video/${videoId}`)
           .then(response => {
-              console.log(response);
               setIsError(false);
               createVideoInfo(response.data);
 
@@ -44,19 +43,10 @@ const VideoPlayer = () => {
     }, [videoId])
 
     async function createVideoInfo (video) {
-        console.log("+++++++++++++++");
-        console.log(`http://localhost:5000/superresolve?video=${video.videoURL}&audio=${video.audioURL}`);
-        axios
-        
-        .get(`http://localhost:5000/superresolve?video=${video.videoURL}&audio=${video.audioURL}`)
-        .then( response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.log(error);
-            setIsError(true);
-        })
-
+        axios.post('http://localhost:5000/superresolve', {
+            videoURL: video.videoURL,
+            audioURL: video.audioURL
+          });
         const thumbnailURL = video.thumbnailURL;
         const videoURL = video.videoURL;
         const audioURL = video.audioURL;
@@ -84,7 +74,7 @@ const VideoPlayer = () => {
         <div className='videoplayer'>
             <div className='videoplayer__videodetails'>
                 <div className='videoplayer__video'>
-                    {isLoading ? <CircularProgress className='loading' color='secondary'/> : <Video videoURL={videoInfo.videoURL} audioURL={videoInfo.audioURL} /> }
+                    {isLoading ? <CircularProgress className='loading' color='secondary'/> : <Video /> }
                 </div>
                 <div className='videoplayer__videoinfo'>
                     {!isLoading ? <VideoInfo

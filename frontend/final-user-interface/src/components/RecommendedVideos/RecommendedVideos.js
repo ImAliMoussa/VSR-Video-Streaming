@@ -47,10 +47,7 @@ const RecommendedVideos = () => {
           videoId,
           image,
           title,
-      //    channel,
-      //    views,
           timestamp,
-      //    channelImage
         });
       };
       setVideoCards(newVideoCards);
@@ -72,10 +69,7 @@ const RecommendedVideos = () => {
                               <VideoCard 
                                 title={item.title}
                                 image={item.image}
-                               // views={item.views}
                                 timestamp={item.timestamp}
-                               // channel={item.channel}
-                               // channelImage={item.channelImage}
                               />
                             </Link>
                     )

@@ -82,5 +82,3 @@ def super_resolve(image):
     end_time = time.time()
     # print(end_time - start_time)
     return output
-
-
