@@ -21,7 +21,7 @@ class RunningProcess:
 
 # app.config.from_object('config')
 
-# CORS(app, resources={r"*": {"origins": "*"}}, allow_headers="*")
+CORS(app, resources={r"*": {"origins": "*"}}, allow_headers="*")
 
 # @app.after_request
 #     def after_request(response):

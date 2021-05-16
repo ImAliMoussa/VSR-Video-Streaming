@@ -16,6 +16,16 @@ const VideoPlayer = () => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
+
+        axios
+            .get(`http://localhost:5000/superresolve?video=https://video-super-resolution.fra1.digitaloceanspaces.com/BigBuckBunny.mp4&audio=https://video-super-resolution.fra1.digitaloceanspaces.com/output_audio.aac`)
+            .then( response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+                setIsError(true);
+            })
         setVideoInfo([]);
         setIsLoading(true);
         axios
