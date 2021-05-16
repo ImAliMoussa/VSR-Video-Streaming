@@ -11,6 +11,6 @@ class VideoSerializer(serializers.ModelSerializer):
             "videoKeyS3",
             "title",
             "uploadDate",
-            "thumbnailKeyS3",
+            "thumbnailURL",
             "audioKeyS3",
         ]
