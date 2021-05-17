@@ -4,7 +4,7 @@ import json
 import logging
 from logging import Formatter, FileHandler
 import sr
-from vidgear.gears import CamGear, StreamGear
+from vidgear.gears import CamGear, StreamGear, WriteGear, VideoGear
 
 from multiprocessing import Process
 
@@ -17,6 +17,7 @@ app = Flask(__name__)
 class RunningProcess:
 
     sr_process = None
+    download_process = None
 
 
 # app.config.from_object('config')
@@ -82,6 +83,76 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
     # safely close streamer
     streamer.terminate()
 
+def save_sr(video_url, audio_url, video_name='output.mp4'):
+    # Open input video stream
+    stream = CamGear(source=video_url).start()
+
+    # set input audio stream path
+    input_audio = audio_url
+
+    # define your parameters
+    output_params = {
+        "-input_framerate": stream.framerate
+    }  # output framerate must match source framerate
+
+    # Define writer with defined parameters and suitable output filename for e.g. `Output.mp4`
+    writer = WriteGear(output_filename='no_audio_'+video_name, **output_params)
+
+    # loop over
+    while True:
+
+        # read frames from stream
+        frame = stream.read()
+
+        # check for frame if Nonetype
+        if frame is None:
+            break
+
+        # {do something with the frame here}
+
+        # write frame to writer
+        writer.write(frame)
+
+        # Show output window
+        cv2.imshow("Output Frame", frame)
+
+
+    # close output window
+    cv2.destroyAllWindows()
+
+    # safely close video stream
+    stream.stop()
+
+    # safely close writer
+    writer.close()
+
+
+    # sleep 1 sec as the above video might still be rendering
+    time.sleep(1)
+
+
+    # format FFmpeg command to generate `Output_with_audio.mp4` by merging input_audio in above rendered `Output.mp4`
+    ffmpeg_command = [
+        "-y",
+        "-i",
+        'no_audio_'+video_name,
+        "-i",
+        audio_url,
+        "-c:v",
+        "copy",
+        "-c:a",
+        "copy",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0",
+        "-shortest",
+        video_name,
+    ]  # `-y` parameter is to overwrite outputfile if exists
+
+    # execute FFmpeg command
+    writer.execute_ffmpeg_cmd(ffmpeg_command)
+
 
 @app.route('/superresolve', methods=['post'])
 def post_superresolved():
@@ -112,6 +183,39 @@ def post_superresolved():
     return jsonify(
                 {"success": True}
             )
+
+
+@app.route('/download', methods=['POST'])
+def download_sr():
+    body = request.get_json()
+    video_url = body.get('videoURL', None)
+    audio_url = body.get('audioURL', None)
+    video_name = body.get('videoName', None)
+    if video_url is None or audio_url is None or video_name is None:
+        abort(400)
+
+    err = False
+    try:
+        if RunningProcess.download_process is not None and RunningProcess.download_process.is_alive():
+            # terminate the process if it is running
+            print('KIlled')
+            RunningProcess.download_process.terminate()
+
+        RunningProcess.download_process = Process(target=(save_sr), args=(video_url, audio_url, video_name))
+        RunningProcess.download_process.start()
+
+    except Exception as e:
+        print(str(e))
+        err = True
+
+    if err:
+        abort(500)
+
+
+    return jsonify(
+                {"success": True}
+                )
+
 
 @app.route('/dash/<file_name>', methods=['GET'])
 def get_dash_file(file_name):
