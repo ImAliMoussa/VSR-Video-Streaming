@@ -64,7 +64,7 @@ def preprocess(img):
     return x, ycbcr
 
 
-def super_resolve(image):
+def super_resolve_fsrcnn(image):
     start_time = time.time()
     w, h, c = image.shape
     bicubic = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)

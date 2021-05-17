@@ -68,7 +68,7 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
 
         resized = cv2.resize(frame, (224, 100), interpolation=cv2.INTER_AREA)
         if perform_super_resolution:
-            super_res_frame = sr.super_resolve(resized)
+            super_res_frame = sr.super_resolve_fsrcnn(resized)
             # print("max value : ", super_res_frame[0][0])
             streamer.stream(super_res_frame)
         else:
@@ -98,6 +98,8 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
     # Define writer with defined parameters and suitable output filename for e.g. `Output.mp4`
     writer = WriteGear(output_filename='no_audio_'+video_name, **output_params)
 
+    print('Writing')
+
     # loop over
     while True:
 
@@ -114,7 +116,7 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
         writer.write(frame)
 
         # Show output window
-        cv2.imshow("Output Frame", frame)
+        #cv2.imshow("Output Frame", frame)
 
 
     # close output window
@@ -151,6 +153,7 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
     ]  # `-y` parameter is to overwrite outputfile if exists
 
     # execute FFmpeg command
+    print('ffmpeg execute')
     writer.execute_ffmpeg_cmd(ffmpeg_command)
 
 
