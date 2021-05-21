@@ -4,14 +4,15 @@ import Header from './components/Header/Header';
 import RecommendedVideos from './components/RecommendedVideos/RecommendedVideos';
 import SearchPage from './components/SearchPage/SearchPage';
 import VideoPlayer from './components/VideoPlayer/VideoPlayer';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import UploadPage from './components/UploadPage/UploadPage';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
 
   return (
     <div className="App">
       <Router>
-      <Header />
+        <Header />
         <Switch>
           <Route path='/video/:videoId'>
             <div className="app__mainpage">
@@ -23,17 +24,19 @@ function App() {
               <SearchPage />
             </div>
           </Route>
+          <Route path='/upload'>
+            <UploadPage />
+          </Route>
           <Route path='/'>
             <div className="app__mainpage">
               <RecommendedVideos />
             </div>
           </Route>
-          
         </Switch>
       </Router>
 
 
-      
+
     </div>
   );
 }
