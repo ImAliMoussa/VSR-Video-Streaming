@@ -1,8 +1,10 @@
+import ntpath
 from datetime import datetime
 
 from django.db import models
 
 from .presigned_link import get_file_link
+
 
 # Create your models here.
 class Video(models.Model):
@@ -19,7 +21,7 @@ class Video(models.Model):
     @property
     def videoURL(self):
         return get_file_link(self.videoKeyS3)
-    
+
     @property
     def audioURL(self):
         return get_file_link(self.audioKeyS3)
