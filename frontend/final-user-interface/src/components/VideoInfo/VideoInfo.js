@@ -3,7 +3,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import SideBarRow from '../SideBarRow/SideBarRow';
 import './VideoInfo.css';
 
-const VideoInfo = ({title, description, publishedDate, channelTitle, channelImage, viewCount, likeCount, dislikeCount, subs}) => {
+const VideoInfo = ({title, description, publishedDate,videoURL,audioURL }) => {
     return (
         <div className='videoinfo'>
             <div className='videoinfo__headline'>
@@ -12,7 +12,7 @@ const VideoInfo = ({title, description, publishedDate, channelTitle, channelImag
             <div className='videoinfo__stats'>
                 <p>{publishedDate}</p>
                 <div className="videoinfo__likes">
-                    <SideBarRow Icon={ThumbUpIcon} title={likeCount} />
+                    <SideBarRow videoURL={videoURL} audioURL={audioURL} title={title} />
                 </div>
             </div>
             <hr />

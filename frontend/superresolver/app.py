@@ -89,6 +89,7 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
 
     # set input audio stream path
     input_audio = audio_url
+    #input_audio = 'https://filesamples.com/samples/audio/aac/sample3.aac'
 
     # define your parameters
     output_params = {
@@ -139,7 +140,7 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
         "-i",
         'no_audio_'+video_name,
         "-i",
-        audio_url,
+        input_audio,
         "-c:v",
         "copy",
         "-c:a",

@@ -43,10 +43,10 @@ const VideoPlayer = () => {
     }, [videoId])
 
     async function createVideoInfo (video) {
-        axios.post('http://localhost:5000/superresolve', {
+       /* axios.post('http://localhost:5000/superresolve', {
             videoURL: video.videoURL,
             audioURL: video.audioURL
-          });
+          }); */
         const thumbnailURL = video.thumbnailURL;
         const videoURL = video.videoURL;
         const audioURL = video.audioURL;
@@ -80,6 +80,8 @@ const VideoPlayer = () => {
                     {!isLoading ? <VideoInfo
                                     title={videoInfo.title}
                                     publishedDate={videoInfo.publishedDate}
+                                    videoURL={videoInfo.videoURL}
+                                    audioURL={videoInfo.audioURL}
                                   /> : null
                     }
                 </div>
