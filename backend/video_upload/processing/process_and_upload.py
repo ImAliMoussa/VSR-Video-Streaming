@@ -6,7 +6,6 @@ from .upload import upload_file
 
 
 def process_and_upload_video(serializer: UploadVideoSerializer):
-    print("hello world")
     video_file = serializer.data["videoFile"]
     thumbnail_file = serializer.data["thumbnailFile"]
     title = serializer.data["title"]
@@ -26,4 +25,5 @@ def process_and_upload_video(serializer: UploadVideoSerializer):
     )
 
     video.save()
+    # TODO should delete media directory to avoid files piling up
     print("success")
