@@ -1,4 +1,4 @@
-FROM alpine-opencv-ffmpeg:v0
+FROM vsr-base-image
 
 ADD backend /app
 WORKDIR /app
