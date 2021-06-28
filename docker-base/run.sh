@@ -1,1 +1,1 @@
-docker build -t vsr-image .
+docker build -t vsr-base-image .
