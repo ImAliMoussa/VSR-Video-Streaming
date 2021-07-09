@@ -1,5 +1,8 @@
 name: ECR Build and Push
-on: [push]
+on:
+  release:
+    types:
+      - created
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
