@@ -1,4 +1,5 @@
-FROM borda/docker_python-opencv-ffmpeg
+FROM borda/docker_python-opencv-ffmpeg:cpu-py3.7-cv4.5.2
+
 
 ADD docker-requirements.txt /app/requirements.txt
 
