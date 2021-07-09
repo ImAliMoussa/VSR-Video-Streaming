@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vsr-config
+data:
+  DJANGO_ALLOWED_HOSTS: "*"
+  BUCKET_NAME: "video-super-resolution"
+  DJANGO_LOGLEVEL: "info"
+  DEBUG: "True"
