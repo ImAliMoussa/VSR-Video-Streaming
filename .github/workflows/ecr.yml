@@ -10,5 +10,5 @@ jobs:
         access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-        repo: 403364721735.dkr.ecr.eu-central-1.amazonaws.com/vsr-repo
+        repo: vsr-repo
         region: eu-central-1
