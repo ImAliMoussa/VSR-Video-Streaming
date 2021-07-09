@@ -12,3 +12,5 @@ jobs:
         account_id: ${{ secrets.AWS_ACCOUNT_ID }}
         repo: vsr-repo
         region: eu-central-1
+        create_repo: true
+
