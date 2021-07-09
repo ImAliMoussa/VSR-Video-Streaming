@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
-
+from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -23,3 +23,6 @@ class NewVideoUploadView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def home(request):
+    return HttpResponse('Hi, from the homepage')
