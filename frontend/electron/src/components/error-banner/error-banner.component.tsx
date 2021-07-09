@@ -2,7 +2,7 @@ import React from 'react';
 
 type ErrorBannerProps = {
   readonly errorMsg: string;
-  setDisappear: (e: React.MouseEvent) => void;
+  setDisappear?: (e: React.MouseEvent) => void;
 };
 
 const ErrorBanner = ({ errorMsg, setDisappear }: ErrorBannerProps) => {

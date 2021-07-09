@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import VideoCard from '../../components/card/card.component';
 import { VideoModel } from '../../types';
 import ErrorBanner from '../../components/error-banner/error-banner.component';
+import djangoAxios from '../../custom-axios';
 
 const HomePage = () => {
   const [videos, setVideos] = useState<VideoModel[]>([]);
@@ -11,8 +12,8 @@ const HomePage = () => {
   const [errorMsg, setErrorMsg] = useState<string>('');
 
   useEffect(() => {
-    axios
-      .get<VideoModel[]>('http://localhost:8000/api/video')
+    djangoAxios
+      .get<VideoModel[]>('api/video')
       .then((res) => {
         const newVideoList = res.data;
         setVideos(newVideoList);
@@ -36,9 +37,9 @@ const HomePage = () => {
       {isLoading
         ? 'Videos are loading'
         : videos &&
-          videos.map((el) => {
-            return <VideoCard key={el.id} video={el} />;
-          })}
+        videos.map((el) => {
+          return <VideoCard key={el.id} video={el} />;
+        })}
     </div>
   );
 };

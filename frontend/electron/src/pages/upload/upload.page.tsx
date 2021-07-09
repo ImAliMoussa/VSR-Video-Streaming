@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosRequestConfig } from 'axios';
 import { assert } from 'console';
 import { Redirect } from 'react-router-dom';
 import ProgressBar from '../../components/progress-bar/progress-bar.component';
 import ErrorBanner from '../../components/error-banner/error-banner.component';
 import FileUploadComponent from '../../components/file-upload/file-upload.component';
+import djangoAxios from '../../custom-axios';
 
 const UploadPage = () => {
   const [title, setTitle] = useState<string>('');
@@ -57,8 +58,8 @@ const UploadPage = () => {
 
       setUploading(true);
 
-      axios
-        .post('http://localhost:8000/upload/', formData, config)
+      djangoAxios
+        .post('upload/', formData, config)
         .then(() => {
           setSuccess(true);
           setTimeout(() => {
