@@ -5,7 +5,10 @@
 
 name: Deploy to Amazon ECS
 
-on: [release]
+on:
+  release:
+    types: # This configuration does not affect the page_build event above
+      - created
 env:
   AWS_REGION: eu-central-1                   # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: vsr-repo           # set this to your Amazon ECR repository name
