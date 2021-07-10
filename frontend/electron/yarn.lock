@@ -12459,7 +12459,7 @@ version-range@^1.0.0:
   dependencies:
     version-compare "^1.0.0"
 
-"video.js@^5.18.0 || ^6 || ^7", "video.js@^6 || ^7", video.js@^7.13.3:
+"video.js@^5.18.0 || ^6 || ^7", "video.js@^6 || ^7", video.js@^7.13.3, video.js@^7.4.1:
   version "7.13.3"
   resolved "https://registry.yarnpkg.com/video.js/-/video.js-7.13.3.tgz#5efab7bd56267406307f64d110662b2ccb3d7530"
   integrity sha512-rIGPFRh3v0HqSdfj+/iByKRDBgLVqILK/4i/hW15DfjvgCGhwbw53bRBoJXy496hwh/XYeOAqckc87L2FN375g==
@@ -12499,6 +12499,13 @@ videojs-react-enhanced@^0.3.1:
   dependencies:
     "@babel/runtime" "^7.11.2"
     prop-types "^15.7.2"
+
+videojs-vjsdownload@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/videojs-vjsdownload/-/videojs-vjsdownload-1.0.4.tgz#016a59ec6cffef110f3c7ec3f9bc831916c7d2e1"
+  integrity sha512-+i+cRnYLDKvhJKPnMuO60nvmrdh0wq2NTISvy00fHE98W31yLx66DFiaYIrznLefQyKRuc0idA3CPVvRW8zfIQ==
+  dependencies:
+    video.js "^7.4.1"
 
 videojs-vtt.js@^0.15.3:
   version "0.15.3"

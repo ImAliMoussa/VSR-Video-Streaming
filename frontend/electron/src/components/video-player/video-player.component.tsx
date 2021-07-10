@@ -82,7 +82,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
   };
 
   return (
-    <div className="h-screen py-4">
+    <div className="py-4">
       <VideoPlayerHelper {...videoJsOptions} />
     </div>
   );

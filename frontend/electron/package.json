@@ -271,7 +271,8 @@
     "source-map-support": "^0.5.19",
     "video.js": "^7.13.3",
     "videojs-contrib-dash": "^5.0.0",
-    "videojs-react-enhanced": "^0.3.1"
+    "videojs-react-enhanced": "^0.3.1",
+    "videojs-vjsdownload": "^1.0.4"
   },
   "devEngines": {
     "node": ">=10.x",
