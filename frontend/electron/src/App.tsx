@@ -4,6 +4,7 @@ import './App.global.css';
 import Navbar from './components/navbar/navbar.component';
 import HomePage from './pages/home/home.page';
 import UploadPage from './pages/upload/upload.page';
+import WatchPage from './pages/watch-video/watch-video.page';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <div className="h-screen">
         <Switch>
           <Route path="/upload" component={UploadPage} />
+          <Route path="/watch/:key" component={WatchPage} />
           <Route path="/" component={HomePage} />
         </Switch>
       </div>

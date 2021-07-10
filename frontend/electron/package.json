@@ -186,6 +186,7 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-test-renderer": "^16.9.3",
+    "@types/video.js": "^7.3.23",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
@@ -266,7 +267,9 @@
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.5",
     "request": "2.79.0",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "video.js": "^7.13.3",
+    "videojs-react-enhanced": "^0.3.1"
   },
   "devEngines": {
     "node": ">=10.x",
