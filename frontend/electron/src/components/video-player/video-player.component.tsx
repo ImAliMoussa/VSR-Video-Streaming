@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import * as React from 'react';
 import { useState } from 'react';
 import videojs from 'video.js';
@@ -40,17 +41,15 @@ class VideoPlayerHelper extends React.Component {
   // see https://github.com/videojs/video.js/pull/3856
   render() {
     return (
-      <div className="c-player">
+      <div className="c-player w-5/6 mx-auto align-middle">
         <div className="c-player__screen" data-vjs-player="true">
           <video
-            ref={(node: HTMLVideoElement) => (this.videoNode = node)}
+            ref={(node: HTMLVideoElement) => {
+              this.videoNode = node;
+            }}
             className="video-js vjs-fluid"
           />
         </div>
-        {/* <div className="c-player__controls"> */}
-        {/*  <button>Play</button> */}
-        {/*  <button>Pause</button> */}
-        {/* </div> */}
       </div>
     );
   }
@@ -63,14 +62,15 @@ type VideoPlayerProps = {
 const VideoPlayer = (props: VideoPlayerProps) => {
   const [videoLink, setVideoLink] = useState(props.video);
   const videoJsOptions = {
-    autoplay: true,
+    autoplay: false,
     controls: true,
     fluid: true,
     sources: [
       {
         src:
-          'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        type: 'video/mp4',
+          // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          'https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+        type: 'application/dash+xml',
       },
     ],
   };
@@ -82,7 +82,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
   };
 
   return (
-    <div className="App">
+    <div className="h-screen py-4">
       <VideoPlayerHelper {...videoJsOptions} />
     </div>
   );
