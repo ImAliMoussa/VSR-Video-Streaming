@@ -1,5 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faThumbsUp,
+  faThumbsDown,
+  faFileDownload,
+  IconDefinition,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons';
 import VideoPlayer from '../../components/video-player/video-player.component';
 import { VideoModel } from '../../types';
 
@@ -24,6 +32,32 @@ const TitleViewAndDate = ({ video }: VideoModelProps) => {
   );
 };
 
+type ButtonWithIconAndTextProps = {
+  readonly text: string;
+  readonly icon: IconDefinition;
+};
+
+const ButtonWithIconAndText = ({ text, icon }: ButtonWithIconAndTextProps) => {
+  return (
+    <div className="flex items-center mr-5 py-2 cursor-pointer text-lg text-gray-500 hover:text-gray-700">
+      <span>
+        <FontAwesomeIcon className="mr-1" icon={icon} />
+        <span className="ml-1 text-sm">{text}</span>
+      </span>
+    </div>
+  );
+};
+
+const ButtonGroupOnRight = () => {
+  return (
+    <section className="justify-end flex flex-row flex-wrap">
+      <ButtonWithIconAndText text="97K" icon={faThumbsUp} />
+      <ButtonWithIconAndText text="97K" icon={faThumbsDown} />
+      <ButtonWithIconAndText text="VSR Download" icon={faDownload} />
+    </section>
+  );
+};
+
 const WatchPage = () => {
   // refer to https://github.com/reach/router/issues/414#issuecomment-859406190
   const location = useLocation();
@@ -34,7 +68,7 @@ const WatchPage = () => {
       <div className="w-5/6 mx-auto my-2">
         <div className="flex justify-between">
           <TitleViewAndDate video={video} />
-          <div>Right part</div>
+          <ButtonGroupOnRight />
         </div>
       </div>
     </div>
