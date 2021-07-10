@@ -25,4 +25,4 @@ class NewVideoUploadView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def home(request):
-    return HttpResponse('Hi, from the homepage :(')
+    return HttpResponse('Django server is running...')

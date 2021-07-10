@@ -161,3 +161,4 @@ npm-debug.log
 media/
 data
 vsr-secrets
+docker.env
