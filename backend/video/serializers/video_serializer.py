@@ -16,4 +16,7 @@ class VideoSerializer(serializers.ModelSerializer):
             "likes",
             "dislikes",
             "views",
+            "duration",
+            "fps",
+            "uploadTimeFormatted"
         ]

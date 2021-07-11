@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +8,6 @@ import {
   IconDefinition,
   faDownload,
 } from '@fortawesome/free-solid-svg-icons';
-import { assert } from 'console';
 import axios from 'axios';
 import VideoPlayer from '../../components/video-player/video-player.component';
 import { VideoModel } from '../../types';
@@ -22,7 +22,7 @@ const TitleViewAndDate = ({ video }: VideoModelProps) => {
     <div>
       <div className="font-semibold text-xl mb-2">{video.title}</div>
       <div className="font-medium text-sm text-gray-500">
-        <span>{video.uploadDate}</span>
+        <span>{video.uploadTimeFormatted}</span>
         <span className="font-bold mx-2">&bull;</span>
         <span>{video.views + 1} views</span>
       </div>
@@ -58,23 +58,26 @@ const ButtonWithIconAndText = ({
   );
 };
 
+ButtonWithIconAndText.defaultProps = {
+  par: 0,
+};
+
 const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
   const [likes, setLikes] = useState<number>(video.likes);
   const [dislikes, setDislikes] = useState<number>(video.dislikes);
 
-  const issueLikeOrDislike = (event: React.MouseEvent, addValue?: number) => {
+  const issueLikeOrDislike = (_event: React.MouseEvent, addValue?: number) => {
     djangoAxios
       .post(`api/video/likes/${video.id}`, { addValue })
       .then(() => {
-        console.log({ addValue });
         if (addValue) {
-          console.log('good this is working');
           if (addValue > 0) setLikes(likes + 1);
           if (addValue < 0) setDislikes(dislikes + 1);
         }
         return undefined;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
       });
   };

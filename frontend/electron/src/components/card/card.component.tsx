@@ -1,5 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faThumbsUp,
+  faThumbsDown,
+  IconDefinition,
+  faEye,
+} from '@fortawesome/free-solid-svg-icons';
+import { getTimeAsStr } from '../../common/utils';
 import { VideoModel } from '../../types';
 
 type VideoCardProps = {
@@ -17,16 +25,21 @@ const VideoCard = (props: VideoCardProps) => {
       <div className="my-6 mx-2 shadow-md border-gray-800 bg-gray-100 relative cursor-pointer">
         <img src={video.thumbnailURL} alt="" />
         <div className="badge absolute top-0 right-0 bg-red-500 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded">
-          10:30
+          {getTimeAsStr(video.duration)}
         </div>
-        <div className="info-box text-xs flex p-1 font-semibold text-gray-500 bg-gray-300">
-          <span className="mr-1 p-1 px-2 font-bold">{video.views} Views</span>
-          <span className="mr-1 p-1 px-2 font-bold border-l border-gray-400">
-            {video.likes} Likes
-          </span>
-          <span className="mr-1 p-1 px-2 font-bold border-l border-gray-400">
-            {video.dislikes} Dislikes
-          </span>
+        <div className="info-box py-1 text-xs grid grid-rows-1 grid-flow-col p-1 font-semibold text-gray-500 bg-gray-300">
+          <div className="mx-auto font-bold">
+            <FontAwesomeIcon className="mr-1" icon={faEye} />
+            {video.views}
+          </div>
+          <div className="mx-auto font-bold">
+            <FontAwesomeIcon className="mr-1" icon={faThumbsUp} />
+            {video.likes}
+          </div>
+          <div className="mx-auto font-bold">
+            <FontAwesomeIcon className="mr-1" icon={faThumbsDown} />
+            {video.dislikes}
+          </div>
         </div>
         <div className="desc p-3 text-gray-800">
           <span className="title font-bold block cursor-pointer hover:underline">

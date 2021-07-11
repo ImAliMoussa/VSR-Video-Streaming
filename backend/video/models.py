@@ -15,6 +15,8 @@ class Video(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
+    duration = models.FloatField(default=0)
+    fps = models.IntegerField(default=0)
 
     @property
     def thumbnailURL(self):
@@ -27,6 +29,10 @@ class Video(models.Model):
     @property
     def audioURL(self):
         return get_file_link(self.audioKeyS3)
+
+    @property
+    def uploadTimeFormatted(self):
+        return self.uploadDate.strftime("%m/%d/%Y, %H:%M:%S")
 
     def __str__(self):
         return self.title

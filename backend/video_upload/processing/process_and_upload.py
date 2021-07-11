@@ -1,4 +1,7 @@
+import json
+import ntpath
 import os
+import subprocess
 
 from django.conf import settings
 
@@ -8,8 +11,23 @@ from .upload import upload_file
 from ..serializers import UploadVideoSerializer
 
 
+# https://stackoverflow.com/questions/3844430/how-to-get-the-duration-of-a-video-in-python
+def get_duration_and_fps(filename):
+    basename = ntpath.basename(filename)
+    full_path = os.path.join(settings.MEDIA_ROOT, basename)
+    result = subprocess.check_output(
+        f'ffprobe -v quiet -show_streams -select_streams v:0 -of json "{full_path}"',
+        shell=True).decode()
+    fields = json.loads(result)['streams'][0]
+
+    duration = fields['duration']
+    fps = eval(fields['r_frame_rate'])
+    return duration, fps
+
+
 def remove_file(file_name: str):
-    file_full_path = os.path.join(settings.MEDIA_ROOT, file_name)
+    basename = ntpath.basename(file_name)
+    file_full_path = os.path.join(settings.MEDIA_ROOT, basename)
     os.remove(file_full_path)
 
 
@@ -24,6 +42,8 @@ def process_and_upload_video(serializer: UploadVideoSerializer):
     upload_file(thumbnail_file)
     upload_file(audio_file)
 
+    duration, fps = get_duration_and_fps(video_file)
+
     video = Video(
         title=title,
         videoKeyS3=video_file,
@@ -32,7 +52,9 @@ def process_and_upload_video(serializer: UploadVideoSerializer):
         uploadDate=upload_date,
         likes=0,
         dislikes=0,
-        views=0
+        views=0,
+        duration=duration,
+        fps=fps
     )
 
     video.save()
