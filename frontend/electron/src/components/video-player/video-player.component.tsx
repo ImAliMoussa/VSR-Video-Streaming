@@ -69,7 +69,8 @@ const VideoPlayer = (props: VideoPlayerProps) => {
       {
         src:
           // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-          'https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+          // 'https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+          'http://localhost:63636/output.mpd',
         type: 'application/dash+xml',
       },
     ],

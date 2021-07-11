@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faThumbsUp,
   faThumbsDown,
-  faFileDownload,
   IconDefinition,
   faDownload,
 } from '@fortawesome/free-solid-svg-icons';
