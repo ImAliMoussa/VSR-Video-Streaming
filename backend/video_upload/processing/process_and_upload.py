@@ -1,8 +1,16 @@
-from video.models import Video
+import os
 
-from ..serializers import UploadVideoSerializer
+from django.conf import settings
+
+from video.models import Video
 from .audiocreation import create_audio_file_from_video
 from .upload import upload_file
+from ..serializers import UploadVideoSerializer
+
+
+def remove_file(file_name: str):
+    file_full_path = os.path.join(settings.MEDIA_ROOT, file_name)
+    os.remove(file_full_path)
 
 
 def process_and_upload_video(serializer: UploadVideoSerializer):
@@ -28,5 +36,9 @@ def process_and_upload_video(serializer: UploadVideoSerializer):
     )
 
     video.save()
-    # TODO should delete media directory to avoid files piling up
+
+    remove_file(video_file)
+    remove_file(audio_file)
+    remove_file(thumbnail_file)
+
     print("success")

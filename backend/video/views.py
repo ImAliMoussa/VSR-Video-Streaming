@@ -1,10 +1,12 @@
+import json
+
 from django.http import JsonResponse
 from rest_framework import status
 
 from .models import Video
 # Create your views here.
 from .serializers.video_serializer import VideoSerializer
-import json
+
 
 def get_videos(request):
     videos = Video.objects.all()
@@ -62,6 +64,7 @@ def like_dislike_video(request, video_id: int):
     except Video.DoesNotExist as e:
         print(e)
         return JsonResponse(status=status.HTTP_404_NOT_FOUND)
+
 
 def increment_views_video(request, video_id: int):
     try:
