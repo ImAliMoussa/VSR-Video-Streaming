@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import * as React from 'react';
-import { useState } from 'react';
 import videojs from 'video.js';
 
 // Styles
@@ -60,7 +59,6 @@ type VideoPlayerProps = {
 };
 
 const VideoPlayer = (props: VideoPlayerProps) => {
-  const [videoLink, setVideoLink] = useState(props.video);
   const videoJsOptions = {
     autoplay: false,
     controls: true,
@@ -74,12 +72,6 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         type: 'application/dash+xml',
       },
     ],
-  };
-
-  // dummy coede
-  const handleBtnPress = (event: MouseEvent) => {
-    event.preventDefault();
-    setVideoLink('http://vjs.zencdn.net/v/oceans.mp4');
   };
 
   return (

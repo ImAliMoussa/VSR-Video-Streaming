@@ -7,15 +7,14 @@ import {
   IconDefinition,
   faDownload,
 } from '@fortawesome/free-solid-svg-icons';
+import { assert } from 'console';
+import axios from 'axios';
 import VideoPlayer from '../../components/video-player/video-player.component';
 import { VideoModel } from '../../types';
-
-interface CustomizedState {
-  video: VideoModel;
-}
+import djangoAxios from '../../custom-axios';
 
 type VideoModelProps = {
-  readonly video: VideoModel;
+  video: VideoModel;
 };
 
 const TitleViewAndDate = ({ video }: VideoModelProps) => {
@@ -34,25 +33,88 @@ const TitleViewAndDate = ({ video }: VideoModelProps) => {
 type ButtonWithIconAndTextProps = {
   readonly text: string;
   readonly icon: IconDefinition;
+  onClickHanlder: (e: React.MouseEvent, addValue?: number) => void;
+  readonly par?: number;
 };
 
-const ButtonWithIconAndText = ({ text, icon }: ButtonWithIconAndTextProps) => {
+const ButtonWithIconAndText = ({
+  text,
+  icon,
+  onClickHanlder,
+  par,
+}: ButtonWithIconAndTextProps) => {
+  const callback = par
+    ? (e: React.MouseEvent) => onClickHanlder(e, par)
+    : onClickHanlder;
   return (
-    <div className="flex items-center mr-5 py-2 cursor-pointer text-lg text-gray-500 hover:text-gray-700">
-      <span>
-        <FontAwesomeIcon className="mr-1" icon={icon} />
-        <span className="ml-1 text-sm">{text}</span>
-      </span>
-    </div>
+    <button className="focus:outline-none" type="button" onClick={callback}>
+      <div className="flex items-center mr-5 py-2 cursor-pointer text-lg text-gray-500 hover:text-gray-700">
+        <span>
+          <FontAwesomeIcon className="mr-1" icon={icon} />
+          <span className="ml-1 text-sm">{text}</span>
+        </span>
+      </div>
+    </button>
   );
 };
 
-const ButtonGroupOnRight = () => {
+const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
+  const setLikes = (likes: number) => {
+    console.log(likes);
+  };
+  const setDislikes = (likes: number) => {
+    console.log(likes);
+  };
+  const likes = 1;
+  const dislikes = 1;
+  const issueLikeOrDislike = (event: React.MouseEvent, addValue?: number) => {
+    djangoAxios
+      .post(`api/likes/${video.id}`, { addValue })
+      .then(() => {
+        if (addValue) {
+          if (addValue > 0) setLikes(likes + 1);
+          if (addValue < 0) setDislikes(dislikes + 1);
+        }
+        return undefined;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+  const downloadVSR = () => {
+    axios
+      .post('http://localhost:5000/download', {
+        videoName: `${video.title}.mp4`,
+        videoURL: video.videoURL,
+        audioURL: video.audioURL,
+      })
+      .then(() => {
+        console.log('download started');
+        return undefined;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
   return (
     <section className="justify-end flex flex-row flex-wrap">
-      <ButtonWithIconAndText text="97K" icon={faThumbsUp} />
-      <ButtonWithIconAndText text="97K" icon={faThumbsDown} />
-      <ButtonWithIconAndText text="VSR Download" icon={faDownload} />
+      <ButtonWithIconAndText
+        text="97K"
+        icon={faThumbsUp}
+        onClickHanlder={issueLikeOrDislike}
+        par={1}
+      />
+      <ButtonWithIconAndText
+        text="97K"
+        icon={faThumbsDown}
+        onClickHanlder={issueLikeOrDislike}
+        par={-1}
+      />
+      <ButtonWithIconAndText
+        text="VSR Download"
+        icon={faDownload}
+        onClickHanlder={downloadVSR}
+      />
     </section>
   );
 };
@@ -60,14 +122,14 @@ const ButtonGroupOnRight = () => {
 const WatchPage = () => {
   // refer to https://github.com/reach/router/issues/414#issuecomment-859406190
   const location = useLocation();
-  const { video } = location.state as CustomizedState;
+  const { video } = location.state as VideoModelProps;
   return (
     <div>
       <VideoPlayer video={video} />
       <div className="w-5/6 mx-auto my-2">
         <div className="flex justify-between">
           <TitleViewAndDate video={video} />
-          <ButtonGroupOnRight />
+          <ButtonGroupOnRight video={video} />
         </div>
       </div>
     </div>
