@@ -57,6 +57,7 @@ def like_dislike_video(request, video_id: int):
             video.dislikes += 1
         elif value > 0:
             video.likes += 1
+        video.save()
         return JsonResponse(status=status.HTTP_200_OK)
     except Video.DoesNotExist as e:
         print(e)
