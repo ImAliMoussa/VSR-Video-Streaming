@@ -13,4 +13,7 @@ class VideoSerializer(serializers.ModelSerializer):
             "uploadDate",
             "thumbnailURL",
             "audioURL",
+            "likes",
+            "dislikes",
+            "views",
         ]

@@ -13,6 +13,9 @@ class Video(models.Model):
     uploadDate = models.DateTimeField(default=datetime.now)
     thumbnailKeyS3 = models.CharField(max_length=128)
     audioKeyS3 = models.CharField(max_length=128)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
 
     @property
     def thumbnailURL(self):

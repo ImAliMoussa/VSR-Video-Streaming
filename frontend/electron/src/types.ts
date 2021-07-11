@@ -5,4 +5,7 @@ export type VideoModel = {
   readonly uploadDate: string;
   readonly thumbnailURL: string;
   readonly audioURL: string;
+  readonly likes: number;
+  readonly dislikes: number;
+  readonly views: number;
 };

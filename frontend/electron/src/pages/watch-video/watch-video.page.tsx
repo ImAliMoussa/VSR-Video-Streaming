@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -24,14 +24,14 @@ const TitleViewAndDate = ({ video }: VideoModelProps) => {
       <div className="font-medium text-sm text-gray-500">
         <span>{video.uploadDate}</span>
         <span className="font-bold mx-2">&bull;</span>
-        <span>1,000 views</span>
+        <span>{video.views} views</span>
       </div>
     </div>
   );
 };
 
 type ButtonWithIconAndTextProps = {
-  readonly text: string;
+  readonly text: string | number;
   readonly icon: IconDefinition;
   onClickHanlder: (e: React.MouseEvent, addValue?: number) => void;
   readonly par?: number;
@@ -59,17 +59,12 @@ const ButtonWithIconAndText = ({
 };
 
 const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
-  const setLikes = (likes: number) => {
-    console.log(likes);
-  };
-  const setDislikes = (likes: number) => {
-    console.log(likes);
-  };
-  const likes = 1;
-  const dislikes = 1;
+  const [likes, setLikes] = useState<number>(video.likes);
+  const [dislikes, setDislikes] = useState<number>(video.dislikes);
+
   const issueLikeOrDislike = (event: React.MouseEvent, addValue?: number) => {
     djangoAxios
-      .post(`api/likes/${video.id}`, { addValue })
+      .post(`api/video/likes/${video.id}`, { addValue })
       .then(() => {
         if (addValue) {
           if (addValue > 0) setLikes(likes + 1);
@@ -99,13 +94,13 @@ const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
   return (
     <section className="justify-end flex flex-row flex-wrap">
       <ButtonWithIconAndText
-        text="97K"
+        text={video.likes}
         icon={faThumbsUp}
         onClickHanlder={issueLikeOrDislike}
         par={1}
       />
       <ButtonWithIconAndText
-        text="97K"
+        text={video.dislikes}
         icon={faThumbsDown}
         onClickHanlder={issueLikeOrDislike}
         par={-1}

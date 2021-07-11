@@ -37,9 +37,9 @@ const HomePage = () => {
       {isLoading
         ? 'Videos are loading'
         : videos &&
-        videos.map((el) => {
-          return <VideoCard key={el.id} video={el} />;
-        })}
+          videos.map((el) => {
+            return <VideoCard key={el.id} video={el} />;
+          })}
     </div>
   );
 };

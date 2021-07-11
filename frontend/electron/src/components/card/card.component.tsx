@@ -20,12 +20,12 @@ const VideoCard = (props: VideoCardProps) => {
           10:30
         </div>
         <div className="info-box text-xs flex p-1 font-semibold text-gray-500 bg-gray-300">
-          <span className="mr-1 p-1 px-2 font-bold">105 Views</span>
+          <span className="mr-1 p-1 px-2 font-bold">{video.views} Views</span>
           <span className="mr-1 p-1 px-2 font-bold border-l border-gray-400">
-            105 Likes
+            {video.likes} Likes
           </span>
           <span className="mr-1 p-1 px-2 font-bold border-l border-gray-400">
-            105 Dislikes
+            {video.dislikes} Dislikes
           </span>
         </div>
         <div className="desc p-3 text-gray-800">

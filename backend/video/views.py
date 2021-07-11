@@ -3,9 +3,8 @@ from rest_framework import status
 
 from .models import Video
 # Create your views here.
-from .presigned_link import get_file_link
 from .serializers.video_serializer import VideoSerializer
-
+import json
 
 def get_videos(request):
     videos = Video.objects.all()
@@ -44,6 +43,21 @@ def get_video(request, video_id: int):
         video = Video.objects.get(pk=video_id)
         serializer = VideoSerializer(video)
         return JsonResponse(serializer.data, safe=False)
+    except Video.DoesNotExist as e:
+        print(e)
+        return JsonResponse(status=status.HTTP_404_NOT_FOUND)
+
+
+def like_dislike_video(request, video_id: int):
+    try:
+        video = Video.objects.get(pk=video_id)
+        json_data = json.loads(request.body)
+        value = json_data['addValue']
+        if value < 0:
+            video.dislikes += 1
+        elif value > 0:
+            video.likes += 1
+        return JsonResponse(status=status.HTTP_200_OK)
     except Video.DoesNotExist as e:
         print(e)
         return JsonResponse(status=status.HTTP_404_NOT_FOUND)
