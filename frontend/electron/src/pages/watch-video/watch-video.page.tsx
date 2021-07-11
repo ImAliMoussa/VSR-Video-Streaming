@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -123,6 +123,12 @@ const WatchPage = () => {
   // refer to https://github.com/reach/router/issues/414#issuecomment-859406190
   const location = useLocation();
   const { video } = location.state as VideoModelProps;
+  useEffect(() => {
+    axios.post('http://localhost:5000/superresolve', {
+      videoURL: video.videoURL,
+      audioURL: video.audioURL,
+    });
+  });
   return (
     <div>
       <VideoPlayer video={video} />
