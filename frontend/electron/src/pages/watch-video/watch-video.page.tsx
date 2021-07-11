@@ -24,7 +24,7 @@ const TitleViewAndDate = ({ video }: VideoModelProps) => {
       <div className="font-medium text-sm text-gray-500">
         <span>{video.uploadDate}</span>
         <span className="font-bold mx-2">&bull;</span>
-        <span>{video.views} views</span>
+        <span>{video.views + 1} views</span>
       </div>
     </div>
   );
@@ -66,7 +66,9 @@ const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
     djangoAxios
       .post(`api/video/likes/${video.id}`, { addValue })
       .then(() => {
+        console.log({ addValue });
         if (addValue) {
+          console.log('good this is working');
           if (addValue > 0) setLikes(likes + 1);
           if (addValue < 0) setDislikes(dislikes + 1);
         }
@@ -94,13 +96,13 @@ const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
   return (
     <section className="justify-end flex flex-row flex-wrap">
       <ButtonWithIconAndText
-        text={video.likes}
+        text={likes}
         icon={faThumbsUp}
         onClickHanlder={issueLikeOrDislike}
         par={1}
       />
       <ButtonWithIconAndText
-        text={video.dislikes}
+        text={dislikes}
         icon={faThumbsDown}
         onClickHanlder={issueLikeOrDislike}
         par={-1}
@@ -120,6 +122,10 @@ const WatchPage = () => {
   const { video } = location.state as VideoModelProps;
   useEffect(() => {
     axios.post('http://localhost:5000/superresolve', {
+      videoURL: video.videoURL,
+      audioURL: video.audioURL,
+    });
+    djangoAxios.post(`api/video/views/${video.id}`, {
       videoURL: video.videoURL,
       audioURL: video.audioURL,
     });

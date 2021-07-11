@@ -58,7 +58,17 @@ def like_dislike_video(request, video_id: int):
         elif value > 0:
             video.likes += 1
         video.save()
-        return JsonResponse(status=status.HTTP_200_OK)
+        return JsonResponse(status=status.HTTP_200_OK, data={})
+    except Video.DoesNotExist as e:
+        print(e)
+        return JsonResponse(status=status.HTTP_404_NOT_FOUND)
+
+def increment_views_video(request, video_id: int):
+    try:
+        video = Video.objects.get(pk=video_id)
+        video.views += 1
+        video.save()
+        return JsonResponse(status=status.HTTP_200_OK, data={})
     except Video.DoesNotExist as e:
         print(e)
         return JsonResponse(status=status.HTTP_404_NOT_FOUND)
