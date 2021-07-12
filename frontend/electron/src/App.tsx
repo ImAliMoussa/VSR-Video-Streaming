@@ -15,6 +15,7 @@ export default function App() {
         <Switch>
           <Route path="/upload" component={UploadPage} />
           <Route path="/watch/:key" component={WatchPage} />
+          <Route path="/search" component={HomePage} />
           <Route path="/" component={HomePage} />
         </Switch>
       </div>

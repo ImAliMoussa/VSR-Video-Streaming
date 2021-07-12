@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
-import VideoCard from '../../components/card/card.component';
+import { useLocation } from 'react-router-dom';
 import { VideoModel } from '../../types';
 import ErrorBanner from '../../components/error-banner/error-banner.component';
 import djangoAxios from '../../custom-axios';
+import VideosCards from '../../components/videos-cards/videos-cards.component';
+
+type HomePageState = {
+  readonly searchTerm?: string;
+};
 
 const HomePage = () => {
+  const location = useLocation();
+  let searchTerm: string | undefined = '';
+  if (location.state) {
+    searchTerm = (location.state as HomePageState).searchTerm;
+  }
+
   const [videos, setVideos] = useState<VideoModel[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
@@ -13,7 +24,7 @@ const HomePage = () => {
 
   useEffect(() => {
     djangoAxios
-      .get<VideoModel[]>('api/video')
+      .get<VideoModel[]>('api/video', { params: { searchTerm } })
       .then((res) => {
         const newVideoList = res.data;
         setVideos(newVideoList);
@@ -33,14 +44,12 @@ const HomePage = () => {
   }
 
   return (
-    <div className="mx-auto w-11/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 pt-6">
-      {isLoading
-        ? 'Videos are loading'
-        : videos &&
-          videos.map((el) => {
-            return <VideoCard key={el.id} video={el} />;
-          })}
-    </div>
+    <>
+      {searchTerm && searchTerm?.length > 0
+        ? `Search results for ${searchTerm}`
+        : ''}
+      <VideosCards isLoading={isLoading} videos={videos} />
+    </>
   );
 };
 

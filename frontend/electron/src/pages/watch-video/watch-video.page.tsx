@@ -121,6 +121,7 @@ const ButtonGroupOnRight = ({ video }: VideoModelProps) => {
 
 const WatchPage = () => {
   // refer to https://github.com/reach/router/issues/414#issuecomment-859406190
+  const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
   const { video } = location.state as VideoModelProps;
   useEffect(() => {
@@ -132,10 +133,13 @@ const WatchPage = () => {
       videoURL: video.videoURL,
       audioURL: video.audioURL,
     });
-  });
+    setTimeout(() => {
+      setLoading(false);
+    }, 10000);
+  }, []);
   return (
     <div>
-      <VideoPlayer video={video} />
+      {loading ? 'Loading' : <VideoPlayer video={video} />}
       <div className="w-5/6 mx-auto my-2">
         <div className="flex justify-between">
           <TitleViewAndDate video={video} />
