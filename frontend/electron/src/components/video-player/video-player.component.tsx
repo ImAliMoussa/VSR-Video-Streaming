@@ -25,13 +25,6 @@ class VideoPlayerHelper extends React.Component {
     // instantiate video.js
     this.player = videojs(this.videoNode, this.props as any).ready(function () {
       // console.log('onPlayerReady', this);
-      this.on('error', function (event) {
-        const time = this.currentTime();
-
-        if (this.error().code === 2) {
-          this.error(null).pause().load().currentTime(time).play();
-        }
-      });
     });
   }
 
