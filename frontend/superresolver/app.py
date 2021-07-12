@@ -5,7 +5,9 @@ import logging
 from logging import Formatter, FileHandler
 import sr
 from vidgear.gears import CamGear, StreamGear, WriteGear, VideoGear
+import os
 
+from fsrcnn_resolver import Resolver
 from multiprocessing import Process
 
 import cv2
@@ -58,6 +60,11 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
         "-audio": audio_url,
     }
 
+    try:
+        os.remove(output) # delete previous
+    except:
+        pass
+
     # # describe a suitable manifest-file location/name and assign params
     streamer = StreamGear(output=output, **stream_params)
 
@@ -66,10 +73,11 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
         if frame is None:
             break
 
-        resized = cv2.resize(frame, (224, 100), interpolation=cv2.INTER_AREA)
+        # resized = cv2.resize(frame, (224, 100), interpolation=cv2.INTER_AREA)
         if perform_super_resolution:
-            super_res_frame = sr.super_resolve_fsrcnn(resized)
+            # super_res_frame = sr.super_resolve_fsrcnn(resized)
             # print("max value : ", super_res_frame[0][0])
+            super_res_frame = Resolver.perform_sr(frame)
             streamer.stream(super_res_frame)
         else:
             streamer.stream(resized)
