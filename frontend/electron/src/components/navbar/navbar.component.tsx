@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -23,16 +23,30 @@ const Logo = () => {
 };
 
 const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const toAndState = {
+    pathname: '/search',
+    state: { searchTerm },
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <div className="w-screen md:w-3/5 h-10 cursor-pointer border bg-white text-sm flex rounded-full">
       <input
         type="search"
         name="serch"
+        value={searchTerm}
         placeholder="Search"
+        onChange={handleChange}
         className="flex-grow px-4 text-md focus:outline-none rounded-full"
       />
       <span className="flex items-center m-3 text-lg text-gray-700 w-4 h-4 my-auto">
-        <FontAwesomeIcon icon={faSearch} />
+        <Link to={toAndState}>
+          <FontAwesomeIcon icon={faSearch} />
+        </Link>
       </span>
     </div>
   );
