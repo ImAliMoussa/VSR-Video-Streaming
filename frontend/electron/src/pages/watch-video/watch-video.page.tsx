@@ -12,6 +12,7 @@ import axios from 'axios';
 import VideoPlayer from '../../components/video-player/video-player.component';
 import { VideoModel } from '../../types';
 import djangoAxios from '../../custom-axios';
+import Loading from '../../components/loading/loading.component';
 
 type VideoModelProps = {
   video: VideoModel;
@@ -137,9 +138,14 @@ const WatchPage = () => {
       setLoading(false);
     }, 10000);
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div>
-      {loading ? 'Loading' : <VideoPlayer video={video} />}
+      <VideoPlayer video={video} />
       <div className="w-5/6 mx-auto my-2">
         <div className="flex justify-between">
           <TitleViewAndDate video={video} />
