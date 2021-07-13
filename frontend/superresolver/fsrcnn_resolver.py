@@ -108,7 +108,7 @@ class FSRCNN_Resolver:
         # hr = image.resize((image_width, image_height), resample=pil_image.BICUBIC)
 
         # lr = hr.resize((hr.width // args.scale, hr.height // args.scale), resample=pil_image.BICUBIC)
-        lr = pil_image.fromarray(np.uint8(image*255))
+        lr = pil_image.fromarray(np.uint8(image))
         
         bicubic = np.array
         bicubic = lr.resize((lr.width * self.scale, lr.height * self.scale), resample=pil_image.BICUBIC)

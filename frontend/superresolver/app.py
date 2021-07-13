@@ -4,9 +4,11 @@ import json
 import logging
 from logging import Formatter, FileHandler
 import sr
+
+from rrn import RRN_SR
+
 from vidgear.gears import CamGear, StreamGear, WriteGear, VideoGear
 import os
-
 from fsrcnn_resolver import Resolver
 from multiprocessing import Process
 
@@ -60,10 +62,10 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
         "-audio": audio_url,
     }
 
-    try:
-        os.remove(output) # delete previous
-    except:
-        pass
+    # try:
+    #     os.remove(output) # delete previous
+    # except:
+    #     pass
 
     # # describe a suitable manifest-file location/name and assign params
     streamer = StreamGear(output=output, **stream_params)
@@ -73,12 +75,26 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
         if frame is None:
             break
 
-        # resized = cv2.resize(frame, (224, 100), interpolation=cv2.INTER_AREA)
         if perform_super_resolution:
-            # super_res_frame = sr.super_resolve_fsrcnn(resized)
-            # print("max value : ", super_res_frame[0][0])
-            super_res_frame = Resolver.perform_sr(frame)
+            # super_res_frame = sr.super_resolve_fsrcnn(resized) ##onnx
+            # h, w, _ = frame.shape
+            # w_new = min(w, 120)
+            # h = int(w_new/ w * h)
+            # unchanged = not (w == w_new)
+            # w = w_new
+
+            # #print(w,h)
+            # if unchanged:
+            #     resized = cv2.resize(frame, (w, h), interpolation=cv2.INTER_AREA)
+            # else:
+            #     resized = frame
+            # # print("max value : ", super_res_frame[0][0])
+            # #super_res_frame = Resolver.perform_sr(resized)
+            resized = cv2.resize(frame, (224, 100), interpolation=cv2.INTER_AREA)
+
+            super_res_frame = sr.super_resolve_fsrcnn(resized) ##onnx
             streamer.stream(super_res_frame)
+
         else:
             streamer.stream(resized)
 
@@ -92,8 +108,10 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
     streamer.terminate()
 
 def save_sr(video_url, audio_url, video_name='output.mp4'):
+    
     # Open input video stream
     stream = CamGear(source=video_url).start()
+    tr = None
 
     # set input audio stream path
     input_audio = audio_url
@@ -105,27 +123,34 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
     }  # output framerate must match source framerate
 
     # Define writer with defined parameters and suitable output filename for e.g. `Output.mp4`
-    writer = WriteGear(output_filename='no_audio_'+video_name, **output_params)
+    writer = WriteGear(output_filename="no_audio_"+video_name, logging=True, **output_params)
 
     print('Writing')
 
     # loop over
+    frame = None
+    frame1 = None
     while True:
 
         # read frames from stream
-        frame = stream.read()
+        frame = frame1
+        frame1 = stream.read()
 
         # check for frame if Nonetype
-        if frame is None:
+
+        if frame1 is None:
             break
-
-        # {do something with the frame here}
-
+        if frame is None:
+            continue
+        if tr is None:
+            tr = RRN_SR(frame.shape[0],frame.shape[1])
+        sr_frame = tr.sr_rrn(frame, frame1)
         # write frame to writer
-        writer.write(frame)
+        #writer.write(frame1)
+        writer.write(sr_frame)
 
         # Show output window
-        #cv2.imshow("Output Frame", frame)
+        #cv2.imshow("Output Frame", sr_frame)
 
 
     # close output window
@@ -146,7 +171,7 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
     ffmpeg_command = [
         "-y",
         "-i",
-        'no_audio_'+video_name,
+        "no_audio_"+video_name,
         "-i",
         input_audio,
         "-c:v",
@@ -208,13 +233,13 @@ def download_sr():
 
     err = False
     try:
-        if RunningProcess.download_process is not None and RunningProcess.download_process.is_alive():
+        if RunningProcess.sr_process is not None and RunningProcess.sr_process.is_alive():
             # terminate the process if it is running
             print('KIlled')
-            RunningProcess.download_process.terminate()
+            RunningProcess.sr_process.terminate()
 
-        RunningProcess.download_process = Process(target=(save_sr), args=(video_url, audio_url, video_name))
-        RunningProcess.download_process.start()
+        RunningProcess.sr_process = Process(target=(save_sr), args=(video_url, audio_url, video_name))
+        RunningProcess.sr_process.start()
 
     except Exception as e:
         print(str(e))
