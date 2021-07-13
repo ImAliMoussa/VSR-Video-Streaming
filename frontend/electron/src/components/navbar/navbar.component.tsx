@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -6,6 +6,8 @@ import {
   faPlayCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { VideoModel } from '../../types';
+import { getVideos } from '../../common/utils';
 
 const Logo = () => {
   return (
@@ -22,15 +24,29 @@ const Logo = () => {
   );
 };
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const toAndState = {
-    pathname: '/search',
-    state: { searchTerm },
-  };
+type SearchBarProps = {
+  searchTerm: string;
+  setSearchTerm: (searchTerm: string) => void;
+  setVideos: (videos: VideoModel[]) => void;
+  setIsLoading: (isLoading: boolean) => void;
+  setIsError: (isError: boolean) => void;
+  setErrorMsg: (errorMsg: string) => void;
+};
 
+const SearchBar = ({
+  searchTerm,
+  setSearchTerm,
+  setVideos,
+  setIsLoading,
+  setErrorMsg,
+  setIsError,
+}: SearchBarProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const performAction = () => {
+    getVideos(searchTerm, setVideos, setIsLoading, setIsError, setErrorMsg);
   };
 
   return (
@@ -44,9 +60,9 @@ const SearchBar = () => {
         className="flex-grow px-4 text-md focus:outline-none rounded-full"
       />
       <span className="flex items-center m-3 text-lg text-gray-700 w-4 h-4 my-auto">
-        <Link to={toAndState}>
+        <button type="button" onClick={performAction}>
           <FontAwesomeIcon icon={faSearch} />
-        </Link>
+        </button>
       </span>
     </div>
   );
@@ -70,12 +86,26 @@ const NavLinks = () => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({
+  searchTerm,
+  setSearchTerm,
+  setVideos,
+  setIsLoading,
+  setErrorMsg,
+  setIsError,
+}: SearchBarProps) => {
   return (
     <nav className="w-screen bg-gray-100 shadow-sm">
       <div className="md:w-10/12 mx-auto flex flex-row items-center p-2 justify-between">
         <Logo />
-        <SearchBar />
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          setVideos={setVideos}
+          setIsLoading={setIsLoading}
+          setErrorMsg={setErrorMsg}
+          setIsError={setIsError}
+        />
         <NavLinks />
       </div>
     </nav>

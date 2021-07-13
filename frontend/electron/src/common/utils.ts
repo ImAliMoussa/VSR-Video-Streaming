@@ -1,3 +1,7 @@
+import { AxiosError } from 'axios';
+import djangoAxios from '../custom-axios';
+import { VideoModel } from '../types';
+
 const padLeft = (x: number) => {
   if (x >= 10) return x;
   return `0${x}`;
@@ -15,4 +19,27 @@ export const getTimeAsStr = (seconds: number) => {
   const secondsStr = padLeft(rem);
 
   return `${hours >= 1 ? `${hours}:` : ''}${minutesStr}:${secondsStr}`;
+};
+
+export const getVideos = (
+  searchTerm: string,
+  setVideos: any,
+  setIsLoading: any,
+  setIsError: any,
+  setErrorMsg: any
+) => {
+  djangoAxios
+    .get<VideoModel[]>('api/video', { params: { searchTerm } })
+    .then((res) => {
+      const newVideoList = res.data;
+      setVideos(newVideoList);
+      setIsLoading(false);
+      console.log({ newVideoList });
+      return null;
+    })
+    .catch((error: AxiosError) => {
+      console.error({ error });
+      setIsError(true);
+      setErrorMsg(error.message);
+    });
 };
