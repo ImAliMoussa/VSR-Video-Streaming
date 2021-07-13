@@ -9,7 +9,8 @@ from .serializers.video_serializer import VideoSerializer
 
 
 def get_videos(request):
-    videos = Video.objects.all()
+    search_term = request.GET.get('searchTerm', '')
+    videos = Video.objects.filter(title__icontains=search_term)
     serializer = VideoSerializer(videos, many=True)
     return JsonResponse(serializer.data, safe=False)
 

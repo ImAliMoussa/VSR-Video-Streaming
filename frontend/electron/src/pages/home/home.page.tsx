@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useLocation } from 'react-router-dom';
 import { VideoModel } from '../../types';
 import ErrorBanner from '../../components/error-banner/error-banner.component';
@@ -23,6 +23,11 @@ const HomePage = () => {
   const [errorMsg, setErrorMsg] = useState<string>('');
 
   useEffect(() => {
+    // axios.post('http://localhost:5000').catch((e: Error | AxiosError) => {
+    //   setIsError(true);
+    //   setErrorMsg(e.message);
+    // });
+
     djangoAxios
       .get<VideoModel[]>('api/video', { params: { searchTerm } })
       .then((res) => {
