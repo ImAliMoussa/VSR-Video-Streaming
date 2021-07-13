@@ -43,7 +43,7 @@ CORS(app, resources={r"*": {"origins": "*"}}, allow_headers="*")
 
 def stream_video(video_url, audio_url, output="dash/output.mpd"):
     print('Starting')
-    perform_super_resolution = True
+    perform_super_resolution = False
 
     stream = CamGear(
         source=video_url,

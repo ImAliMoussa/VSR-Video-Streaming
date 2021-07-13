@@ -4,6 +4,14 @@ kind: ClusterConfig
 metadata:
   name: vsr-cluster
   region: eu-central-1
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: s3-access
+      labels: {aws-usage: "application"}
+    attachPolicyARNs:
+    - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 
 nodeGroups:
   - name: ng-1
