@@ -20,7 +20,7 @@ spec:
         app: vsr-app
     spec:
       containers:
-        - image: 403364721735.dkr.ecr.eu-central-1.amazonaws.com/vsr-repo:a48b7fb1ee2a7ae15dcdcf562d38ebdfab1c0281
+        - image: 403364721735.dkr.ecr.eu-central-1.amazonaws.com/vsr-repo:c919dbfd0e67d8910e7e6bc6a0288c59342e39bc
           imagePullPolicy: Always
           name: vsr-app
           envFrom:
