@@ -23,7 +23,7 @@ const VideoCard = (props: VideoCardProps) => {
   return (
     <Link to={toAndState}>
       <div className="my-6 mx-2 shadow-md border-gray-800 bg-gray-100 relative cursor-pointer">
-        <img src={video.thumbnailURL} alt="" />
+        <img className="object-cover h-48 w-full" src={video.thumbnailURL} alt="" />
         <div className="badge absolute top-0 right-0 bg-red-500 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded">
           {getTimeAsStr(video.duration)}
         </div>

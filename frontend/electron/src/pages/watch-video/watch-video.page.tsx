@@ -126,23 +126,25 @@ const WatchPage = () => {
   const location = useLocation();
   const { video } = location.state as VideoModelProps;
   useEffect(() => {
-    axios.post('http://localhost:5000/superresolve', {
-      videoURL: video.videoURL,
-      audioURL: video.audioURL,
-    });
-    djangoAxios.post(`api/video/views/${video.id}`, {
-      videoURL: video.videoURL,
-      audioURL: video.audioURL,
-    });
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 20000);
-    const ws = new WebSocket("ws://localhost:9000/");
-    ws.onopen = () => ws.send("please watch output.mpd");
-    ws.onmessage = (event: MessageEvent) => {
-      console.log(event.data)
-      setLoading(false);
-    };
+    axios.get('http://localhost:5000/stop').then(() => {
+      axios.post('http://localhost:5000/superresolve', {
+        videoURL: video.videoURL,
+        audioURL: video.audioURL,
+      });
+      djangoAxios.post(`api/video/views/${video.id}`, {
+        videoURL: video.videoURL,
+        audioURL: video.audioURL,
+      });
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 20000);
+      const ws = new WebSocket("ws://localhost:9000/");
+      ws.onopen = () => ws.send("please watch output.mpd");
+      ws.onmessage = (event: MessageEvent) => {
+        console.log(event.data)
+        setLoading(false);
+      };
+    })
   }, []);
 
   if (loading) {
