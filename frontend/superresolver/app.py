@@ -203,7 +203,6 @@ def stop_resources():
         os.remove('./dash/output.mpd')
     except OSError:
         pass
-    time.sleep(5)
     
     for filePath in fileList:
         try:
