@@ -134,9 +134,15 @@ const WatchPage = () => {
       videoURL: video.videoURL,
       audioURL: video.audioURL,
     });
-    setTimeout(() => {
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 20000);
+    const ws = new WebSocket("ws://localhost:9000/");
+    ws.onopen = () => ws.send("please watch output.mpd");
+    ws.onmessage = (event: MessageEvent) => {
+      console.log(event.data)
       setLoading(false);
-    }, 20000);
+    };
   }, []);
 
   if (loading) {

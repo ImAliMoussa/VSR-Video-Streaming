@@ -2,6 +2,7 @@ import React from 'react';
 import { VideoModel } from '../../types';
 import ErrorBanner from '../../components/error-banner/error-banner.component';
 import VideosCards from '../../components/videos-cards/videos-cards.component';
+import axios, { AxiosError } from 'axios';
 
 type HomePageProps = {
   //   const [videos, setVideos] = useState<VideoModel[]>([]);
@@ -36,10 +37,13 @@ const HomePage = ({
   isError,
   errorMsg,
 }: HomePageProps) => {
+  axios.get('http://localhost:5000/stop').catch((e: AxiosError) => {
+    console.error(e);
+  });
   if (isError) {
     return <ErrorBanner errorMsg={errorMsg} />;
   }
-
+  
   return (
     <>
       {filterTerm && filterTerm?.length > 0 ? (

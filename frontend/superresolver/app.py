@@ -4,13 +4,15 @@ import json
 import logging
 from logging import Formatter, FileHandler
 import sr
-
+import os
+import glob
 from rrn import RRN_SR
 
 from vidgear.gears import CamGear, StreamGear, WriteGear, VideoGear
 import os
 from fsrcnn_resolver import Resolver
 from multiprocessing import Process
+
 
 import cv2
 
@@ -47,8 +49,8 @@ CORS(app, resources={r"*": {"origins": "*"}}, allow_headers="*")
 
 def stream_video(video_url, audio_url, output="dash/output.mpd"):
     print('Starting')
-    perform_super_resolution = False
-
+    perform_super_resolution = True
+    print('*\n'*50, video_url)
     stream = CamGear(
         source=video_url,
         logging=False,
@@ -96,7 +98,7 @@ def stream_video(video_url, audio_url, output="dash/output.mpd"):
             streamer.stream(super_res_frame)
 
         else:
-            streamer.stream(resized)
+            streamer.stream(frame)
 
     print('==========break=========1')
     print('==========break=========2')
@@ -190,8 +192,30 @@ def save_sr(video_url, audio_url, video_name='output.mp4'):
     print('ffmpeg execute')
     writer.execute_ffmpeg_cmd(ffmpeg_command)
 
+@app.route('/stop', methods=['GET'])
+def stop_resources():
+    if RunningProcess.sr_process is not None and RunningProcess.sr_process.is_alive():
+        RunningProcess.sr_process.terminate()
 
-@app.route('/superresolve', methods=['post'])
+    # get a recursive list of file paths that matches pattern including sub directories
+    fileList = glob.glob('./dash/*.m4s', recursive=False)
+    try:
+        os.remove('./dash/output.mpd')
+    except OSError:
+        pass
+    time.sleep(5)
+    
+    for filePath in fileList:
+        try:
+            os.remove(filePath)
+        except OSError:
+            print("Error while deleting file")
+
+    return jsonify({
+        "success" : True
+    })
+
+@app.route('/superresolve', methods=['POST'])
 def post_superresolved():
     body = request.get_json()
     video_url = body.get('videoURL', None)

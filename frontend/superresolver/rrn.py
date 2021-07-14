@@ -31,7 +31,6 @@ class RRN_SR(object):
         image = torch.Tensor(image / 255.).unsqueeze(0).cuda()
         image_prev = torch.Tensor(image_prev / 255.).unsqueeze(0).cuda()
         in_vid = torch.cat((image, image_prev), dim=0).permute(3, 0, 1, 2).unsqueeze(0)
-        #print(in_vid.shape, self.h.shape, self.prediction.shape)
         with torch.no_grad():
             self.h, self.prediction = self.rrn(in_vid, self.h, self.prediction, self.init)
         self.init = False
