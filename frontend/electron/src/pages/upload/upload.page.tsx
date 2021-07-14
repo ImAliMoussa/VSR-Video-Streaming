@@ -87,7 +87,10 @@ const UploadPage = () => {
       <div className="bg-white self-center max-w-md rounded-lg mx-auto border-1 border-gray-300">
         <div className="w-full p-5">
           {errorMessage.length ? (
-            <ErrorBanner errorMsg={errorMessage} setDisappear={makeErrorDisappear} />
+            <ErrorBanner
+              errorMsg={errorMessage}
+              setDisappear={makeErrorDisappear}
+            />
           ) : (
             ''
           )}
@@ -124,7 +127,7 @@ const UploadPage = () => {
             <div className="mt-3 text-center">
               <button
                 type="button"
-                className="h-12 text-lg w-32 bg-gray-700 rounded text-white hover:bg-gray-600"
+                className="h-12 text-lg w-32 bg-gray-700 rounded text-white hover:bg-gray-600 focus:outline-none"
                 onClick={onFileUpload}
               >
                 Upload

@@ -136,7 +136,7 @@ const WatchPage = () => {
     });
     setTimeout(() => {
       setLoading(false);
-    }, 15000);
+    }, 20000);
   }, []);
 
   if (loading) {

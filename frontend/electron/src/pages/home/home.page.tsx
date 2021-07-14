@@ -10,7 +10,7 @@ type HomePageProps = {
   // const [isError, setIsError] = useState<boolean>(false);
   // const [errorMsg, setErrorMsg] = useState<string>('');
   readonly videos: VideoModel[];
-  readonly searchTerm: string;
+  readonly filterTerm: string;
   readonly isLoading: boolean;
   readonly isError: boolean;
   readonly errorMsg: string;
@@ -21,9 +21,17 @@ type HomePageProps = {
   // readonly setErrorMsg: (errorMsg: string) => void;
 };
 
+const SearchInfo = ({ filterTerm }: any) => {
+  return (
+    <div className="mx-auto mt-4 w-11/12">
+      <div className="mx-4 text-lg text-gray-500">{`Search results for "${filterTerm}"`}</div>
+    </div>
+  );
+};
+
 const HomePage = ({
   videos,
-  searchTerm,
+  filterTerm,
   isLoading,
   isError,
   errorMsg,
@@ -34,9 +42,11 @@ const HomePage = ({
 
   return (
     <>
-      {searchTerm && searchTerm?.length > 0
-        ? `Search results for ${searchTerm}`
-        : ''}
+      {filterTerm && filterTerm?.length > 0 ? (
+        <SearchInfo filterTerm={filterTerm} />
+      ) : (
+        ''
+      )}
       <VideosCards isLoading={isLoading} videos={videos} />
     </>
   );

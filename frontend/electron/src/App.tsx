@@ -12,6 +12,7 @@ import { VideoModel } from './types';
 export default function App() {
   const [videos, setVideos] = useState<VideoModel[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filterTerm, setFilterTerm] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
@@ -25,6 +26,7 @@ export default function App() {
       <Navbar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        setFilterTerm={setFilterTerm}
         setVideos={setVideos}
         setIsLoading={setIsLoading}
         setErrorMsg={setErrorMsg}
@@ -40,7 +42,7 @@ export default function App() {
             render={() => (
               <HomePage
                 videos={videos}
-                searchTerm={searchTerm}
+                filterTerm={filterTerm}
                 isLoading={isLoading}
                 isError={isError}
                 errorMsg={errorMsg}

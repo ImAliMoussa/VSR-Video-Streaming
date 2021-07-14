@@ -27,6 +27,7 @@ const Logo = () => {
 type SearchBarProps = {
   searchTerm: string;
   setSearchTerm: (searchTerm: string) => void;
+  setFilterTerm: (filterTerm: string) => void;
   setVideos: (videos: VideoModel[]) => void;
   setIsLoading: (isLoading: boolean) => void;
   setIsError: (isError: boolean) => void;
@@ -36,6 +37,7 @@ type SearchBarProps = {
 const SearchBar = ({
   searchTerm,
   setSearchTerm,
+  setFilterTerm,
   setVideos,
   setIsLoading,
   setErrorMsg,
@@ -47,6 +49,8 @@ const SearchBar = ({
 
   const performAction = () => {
     getVideos(searchTerm, setVideos, setIsLoading, setIsError, setErrorMsg);
+    setFilterTerm(searchTerm);
+    setSearchTerm('');
   };
 
   return (
@@ -60,7 +64,11 @@ const SearchBar = ({
         className="flex-grow px-4 text-md focus:outline-none rounded-full"
       />
       <span className="flex items-center m-3 text-lg text-gray-700 w-4 h-4 my-auto">
-        <button type="button" onClick={performAction}>
+        <button
+          className="focus:outline-none"
+          type="button"
+          onClick={performAction}
+        >
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </span>
@@ -88,6 +96,7 @@ const NavLinks = () => {
 
 const Navbar = ({
   searchTerm,
+  setFilterTerm,
   setSearchTerm,
   setVideos,
   setIsLoading,
@@ -101,6 +110,7 @@ const Navbar = ({
         <SearchBar
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          setFilterTerm={setFilterTerm}
           setVideos={setVideos}
           setIsLoading={setIsLoading}
           setErrorMsg={setErrorMsg}

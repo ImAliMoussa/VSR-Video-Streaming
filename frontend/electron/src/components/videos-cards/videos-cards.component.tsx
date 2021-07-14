@@ -9,7 +9,7 @@ type VideosCardsProps = {
 
 const VideosCards = ({ videos, isLoading }: VideosCardsProps) => {
   return (
-    <div className="mx-auto w-11/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 pt-6">
+    <div className="mx-auto w-11/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 pt-2">
       {isLoading
         ? 'Loading...'
         : videos &&
