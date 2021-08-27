@@ -1,4 +1,29 @@
-Notes from Ali:
+# Graduation Project
+
+### Team members, ordered by alphabet
+- Ali Moussa
+- Fayez El Masry
+- Marwan Salem
+- Mohamed Hisham Gaballah
+- Zeyad Hossam Habib
+
+# Our graduation project
+
+We researched the current state of art in video super-resolution and created a desktop application to deploy our model. 
+
+## Frontend technologies
+- React
+- Typescript
+- Tailwindcss
+- [Electron](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+
+## Backend technologies
+- Django
+- Some Flask
+
+## Deployment
+- AWS EKS, you can use the files in the `eks` directory
+- Building docker image and pushing to AWS ECR using github actions in .github/workflows/ecr.yaml
 
 # Environemnt variables
 
@@ -18,7 +43,7 @@ SPACES_SECRET=foo
 place this at backend/videoservice/.env
 
 ---
-# VScode lina kolena
+# VScode
 
 2) Create a .vscode folder and add the following
 do this first:
@@ -56,7 +81,7 @@ For formatting and linting, 3shan el code yefdal nedif
 
 ---
 
-# Nadafa sahla
+# Formatting python
 3) For formatting the entire directory 3shan el spacing wel nadafa:
 ```
 black .
